@@ -8,8 +8,10 @@ namespace FriGo.ServiceInterfaces
 {
     public interface IUserService
     {
-        User Get(Guid id);
+        User Get(string id);
 
         IEnumerable<User> Get();
+
+        void Edit(User user);
     }
 }

@@ -19,14 +19,15 @@ namespace FriGo.Api.Controllers
     {
         private readonly IIngredientQuantityService ingredientQuantityService;
         private readonly IUserService userService;
+        private readonly IIngredientService ingredientService;
 
 
-        public IngredientQuantityController(IMapper autoMapper, IIngredientQuantityService ingredientQuantityService, IUserService userService)
+        public IngredientQuantityController(IMapper autoMapper, IIngredientQuantityService ingredientQuantityService, IUserService userService, IIngredientService ingredientService)
             : base(autoMapper)
         {
             this.ingredientQuantityService = ingredientQuantityService;
             this.userService = userService;
-
+            this.ingredientService = ingredientService;
         }
 
         /// <summary>
@@ -65,10 +66,19 @@ namespace FriGo.Api.Controllers
         [Authorize]
         public HttpResponseMessage Post(CreateIngredientQuantity createIngredientQuantity)
         {
-            string id;
-            id = User.Identity.GetUserId();
-            id = RequestContext.Principal.Identity.GetUserId();
-            throw new NotImplementedException();
+            var id = User.Identity.GetUserId();
+            FriGo.Db.Models.Authentication.User user =  userService.Get(id);
+
+            Ingredient ingredient = ingredientService.Get(createIngredientQuantity.IngredientId);
+
+            IngredientQuantity ingredientQuantity = AutoMapper.Map<CreateIngredientQuantity, IngredientQuantity>(createIngredientQuantity);
+            ingredientQuantity.Ingredient = ingredient;
+
+            user.IngredientQuantities.Add(ingredientQuantity);
+
+            userService.Edit(user);
+
+            return Request.CreateResponse(HttpStatusCode.Created, ingredientQuantity);
         }
 
         /// <summary>

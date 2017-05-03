@@ -18,5 +18,10 @@ namespace FriGo.Services
         public UserService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
+
+        public User Get(string id)
+        {
+            return UnitOfWork.Repository<User>().GetById(id);
+        }
     }
 }
