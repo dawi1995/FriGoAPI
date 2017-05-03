@@ -10,18 +10,23 @@ using FriGo.Db.Models;
 using FriGo.Db.Models.Ingredients;
 using FriGo.ServiceInterfaces;
 using Swashbuckle.Swagger.Annotations;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.Identity;
 
 namespace FriGo.Api.Controllers
 {
     public class IngredientQuantityController : BaseFriGoController
     {
         private readonly IIngredientQuantityService ingredientQuantityService;
+        private readonly IUserService userService;
 
 
-        public IngredientQuantityController(IMapper autoMapper, IIngredientQuantityService ingredientQuantityService)
+        public IngredientQuantityController(IMapper autoMapper, IIngredientQuantityService ingredientQuantityService, IUserService userService)
             : base(autoMapper)
         {
             this.ingredientQuantityService = ingredientQuantityService;
+            this.userService = userService;
+
         }
 
         /// <summary>
@@ -60,6 +65,9 @@ namespace FriGo.Api.Controllers
         [Authorize]
         public HttpResponseMessage Post(CreateIngredientQuantity createIngredientQuantity)
         {
+            string id;
+            id = User.Identity.GetUserId();
+            id = RequestContext.Principal.Identity.GetUserId();
             throw new NotImplementedException();
         }
 
