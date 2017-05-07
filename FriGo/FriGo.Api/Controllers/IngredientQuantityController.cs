@@ -92,7 +92,14 @@ namespace FriGo.Api.Controllers
         [Authorize]
         public HttpResponseMessage Put(Guid id, EditIngredientQuantity editIngredientQuantity)
         {
-            throw new NotImplementedException();
+            IngredientQuantity ingredientQuantity = ingredientQuantityService.Get(id);
+            ingredientQuantity.Description = editIngredientQuantity.Description;
+            ingredientQuantity.Quantity = editIngredientQuantity.Quantity;
+            //ingredientQuantity = AutoMapper.Map<EditIngredientQuantity, IngredientQuantity>(editIngredientQuantity);
+
+            ingredientQuantityService.Edit(ingredientQuantity);
+
+            return Request.CreateResponse(HttpStatusCode.OK, ingredientQuantity);
         }
 
         /// <summary>
