@@ -10,18 +10,24 @@ using FriGo.Db.Models;
 using FriGo.Db.Models.Ingredients;
 using FriGo.ServiceInterfaces;
 using Swashbuckle.Swagger.Annotations;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.Identity;
 
 namespace FriGo.Api.Controllers
 {
     public class IngredientQuantityController : BaseFriGoController
     {
         private readonly IIngredientQuantityService ingredientQuantityService;
+        private readonly IUserService userService;
+        private readonly IIngredientService ingredientService;
 
 
-        public IngredientQuantityController(IMapper autoMapper, IIngredientQuantityService ingredientQuantityService)
+        public IngredientQuantityController(IMapper autoMapper, IIngredientQuantityService ingredientQuantityService, IUserService userService, IIngredientService ingredientService)
             : base(autoMapper)
         {
             this.ingredientQuantityService = ingredientQuantityService;
+            this.userService = userService;
+            this.ingredientService = ingredientService;
         }
 
         /// <summary>
@@ -60,7 +66,19 @@ namespace FriGo.Api.Controllers
         [Authorize]
         public HttpResponseMessage Post(CreateIngredientQuantity createIngredientQuantity)
         {
-            throw new NotImplementedException();
+            var id = User.Identity.GetUserId();
+            FriGo.Db.Models.Authentication.User user =  userService.Get(id);
+
+            Ingredient ingredient = ingredientService.Get(createIngredientQuantity.IngredientId);
+
+            IngredientQuantity ingredientQuantity = AutoMapper.Map<CreateIngredientQuantity, IngredientQuantity>(createIngredientQuantity);
+            ingredientQuantity.Ingredient = ingredient;
+
+            user.IngredientQuantities.Add(ingredientQuantity);
+
+            userService.Edit(user);
+
+            return Request.CreateResponse(HttpStatusCode.Created, ingredientQuantity);
         }
 
         /// <summary>
@@ -74,7 +92,14 @@ namespace FriGo.Api.Controllers
         [Authorize]
         public HttpResponseMessage Put(Guid id, EditIngredientQuantity editIngredientQuantity)
         {
-            throw new NotImplementedException();
+            IngredientQuantity ingredientQuantity = ingredientQuantityService.Get(id);
+            ingredientQuantity.Description = editIngredientQuantity.Description;
+            ingredientQuantity.Quantity = editIngredientQuantity.Quantity;
+            //ingredientQuantity = AutoMapper.Map<EditIngredientQuantity, IngredientQuantity>(editIngredientQuantity);
+
+            ingredientQuantityService.Edit(ingredientQuantity);
+
+            return Request.CreateResponse(HttpStatusCode.OK, ingredientQuantity);
         }
 
         /// <summary>

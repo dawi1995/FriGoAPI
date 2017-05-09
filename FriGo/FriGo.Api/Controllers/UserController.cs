@@ -23,7 +23,7 @@ namespace FriGo.Api.Controllers
         /// <param name="id"></param>
         [SwaggerResponse(HttpStatusCode.OK, Type = typeof(UserDto))]
         public virtual HttpResponseMessage Get(Guid id)
-        {
+        {   
             throw new NotImplementedException();
         }      
     }
