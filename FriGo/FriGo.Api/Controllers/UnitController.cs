@@ -14,8 +14,10 @@ namespace FriGo.Api.Controllers
 {
     public class UnitController : BaseFriGoController
     {
-        public UnitController(IMapper autoMapper) : base(autoMapper)
+        private readonly IUnitService unitService;
+        public UnitController(IMapper autoMapper,IUnitService unitService) : base(autoMapper)
         {
+            this.unitService = unitService;
         }
 
         /// <summary>
@@ -25,7 +27,8 @@ namespace FriGo.Api.Controllers
         [SwaggerResponse(HttpStatusCode.OK, Type = typeof(IEnumerable<Unit>))]
         public virtual HttpResponseMessage Get()
         {
-            throw new NotImplementedException();
+            IEnumerable<Unit> units = unitService.Get();
+            return Request.CreateResponse(HttpStatusCode.OK, units);
         }
 
         /// <summary>
@@ -36,7 +39,8 @@ namespace FriGo.Api.Controllers
         [SwaggerResponse(HttpStatusCode.OK, Type = typeof(Unit))]
         public virtual HttpResponseMessage Get(Guid id)
         {
-            throw new NotImplementedException();
+            Unit unit = unitService.Get(id);
+            return Request.CreateResponse(HttpStatusCode.OK, unit);
         }
 
         /// <summary>
@@ -50,7 +54,12 @@ namespace FriGo.Api.Controllers
         [Authorize]
         public virtual HttpResponseMessage Post(CreateUnit createUnit)
         {
-            throw new NotImplementedException();
+            Unit unit = AutoMapper.Map<createUnit, Unit>(createUnit);
+            unitService.Add(unit);
+
+            Unit createdUnit = unitService.Get(ingredient.Id);
+
+            return Request.CreateResponse(HttpStatusCode.Created, createdUnit);
         }
 
         /// <summary>
@@ -66,7 +75,20 @@ namespace FriGo.Api.Controllers
         [Authorize]
         public virtual HttpResponseMessage Put(Guid id, EditUnit editUnit)
         {
-            throw new NotImplementedException();
+            Unit unit = unitService.Get(id);
+
+            if (unit == null)
+            {
+                var notFoundError = new Error
+                {
+                    Code = (int)HttpStatusCode.NotFound,
+                    Message = Properties.Resources.UnitNotFoundMessage
+                };
+
+                return Request.CreateResponse(HttpStatusCode.NotFound, notFoundError);
+            }
+            AutoMapper.Map(editUnit, unit);
+            unitService.Edit(unit);
         }
 
         /// <summary>
@@ -80,7 +102,9 @@ namespace FriGo.Api.Controllers
         [Authorize]
         public virtual HttpResponseMessage Delete(Guid id)
         {
-            throw new NotImplementedException();
+            unitService.Delete(id);
+
+            return Request.CreateResponse(HttpStatusCode.NoContent);
         }
     }
 }
