@@ -9,13 +9,20 @@ using FriGo.Db.Models;
 using FriGo.Db.Models.Social;
 using FriGo.ServiceInterfaces;
 using Swashbuckle.Swagger.Annotations;
+using FriGo.Db.Models.Recipes;
+using Microsoft.AspNet.Identity;
 
 namespace FriGo.Api.Controllers
 {
     public class CommentController : BaseFriGoController
     {
-        public CommentController(IMapper autoMapper) : base(autoMapper)
+        private readonly ICommentService commentService;
+        private readonly IRecipeService recipeService;
+        public CommentController(IMapper autoMapper, ICommentService commentService, IRecipeService recipeService) : base(autoMapper)
         {
+            this.commentService = commentService;
+            this.recipeService = recipeService;
+            
         }
 
         /// <summary>
@@ -27,7 +34,13 @@ namespace FriGo.Api.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, Description = "Not found")]
         public virtual HttpResponseMessage Get(Guid recipeId)
         {
-            throw new NotImplementedException();
+            Recipe recipe = recipeService.Get(recipeId);
+            if (recipe == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+
+            ICollection<CommentDto> commentDto = AutoMapper.Map<ICollection<Comment>, ICollection<CommentDto>>(recipe.Comments);
+
+            return Request.CreateResponse(HttpStatusCode.Created, commentDto);
         }
 
         /// <summary>
@@ -43,7 +56,17 @@ namespace FriGo.Api.Controllers
         [Authorize]
         public virtual HttpResponseMessage Put(Guid id, EditComment editComment)
         {
-            throw new NotImplementedException();
+            Comment comment = commentService.Get(id);
+            if (comment == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            if (comment.User.Id != User.Identity.GetUserId())
+            {
+                return Request.CreateResponse(HttpStatusCode.Unauthorized);
+            }
+            comment.Text = editComment.Text;
+            commentService.Edit(comment);
+            CommentDto commentDto = AutoMapper.Map<Comment, CommentDto>(comment);
+            return Request.CreateResponse(HttpStatusCode.Created, commentDto);
         }
 
         /// <summary>
@@ -58,7 +81,15 @@ namespace FriGo.Api.Controllers
         [Authorize]
         public virtual HttpResponseMessage Post(Guid recipeId, CreateComment createComment)
         {
-            throw new NotImplementedException();
+            Recipe recipe = recipeService.Get(recipeId);
+            if (recipe == null) 
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            Comment comment = AutoMapper.Map<CreateComment, Comment>(createComment);
+            recipe.Comments.Add(comment);
+            commentService.Add(comment);
+            CommentDto commentDto = AutoMapper.Map<Comment, CommentDto>(comment);
+            return Request.CreateResponse(HttpStatusCode.Created, commentDto);
+
         }
 
         /// <summary>
@@ -73,7 +104,16 @@ namespace FriGo.Api.Controllers
         [Authorize]
         public virtual HttpResponseMessage Delete(Guid id)
         {
-            throw new NotImplementedException();
+            Comment comment = commentService.Get(id);
+            if (comment == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            if (comment.User.Id != User.Identity.GetUserId())
+            {
+                return Request.CreateResponse(HttpStatusCode.Unauthorized);
+            }
+            commentService.Delete(id);
+            return Request.CreateResponse(HttpStatusCode.NoContent);
+
         }
     }
 }

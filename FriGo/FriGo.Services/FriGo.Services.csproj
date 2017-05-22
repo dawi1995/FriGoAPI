@@ -35,6 +35,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseService.cs" />
+    <Compile Include="CommentService.cs" />
     <Compile Include="CrudService.cs" />
     <Compile Include="IngredientQuantityService.cs" />
     <Compile Include="RecipeService.cs" />
