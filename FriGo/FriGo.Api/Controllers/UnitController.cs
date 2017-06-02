@@ -54,10 +54,10 @@ namespace FriGo.Api.Controllers
         [Authorize]
         public virtual HttpResponseMessage Post(CreateUnit createUnit)
         {
-            Unit unit = AutoMapper.Map<createUnit, Unit>(createUnit);
+            Unit unit = AutoMapper.Map<CreateUnit, Unit>(createUnit);
             unitService.Add(unit);
 
-            Unit createdUnit = unitService.Get(ingredient.Id);
+            Unit createdUnit = unitService.Get(unit.Id);
 
             return Request.CreateResponse(HttpStatusCode.Created, createdUnit);
         }
@@ -89,6 +89,9 @@ namespace FriGo.Api.Controllers
             }
             AutoMapper.Map(editUnit, unit);
             unitService.Edit(unit);
+
+            Unit editedUnit = unitService.Get(id);
+            return Request.CreateResponse(HttpStatusCode.OK, editedUnit);
         }
 
         /// <summary>

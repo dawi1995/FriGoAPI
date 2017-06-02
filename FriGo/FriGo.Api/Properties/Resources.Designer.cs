@@ -160,6 +160,15 @@ namespace FriGo.Api.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unit was not found in our database..
+        /// </summary>
+        internal static string UnitNotFoundMessage {
+            get {
+                return ResourceManager.GetString("UnitNotFoundMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to application/x-www-form-urlencoded.
         /// </summary>
         internal static string UrlEncodedContentType {
