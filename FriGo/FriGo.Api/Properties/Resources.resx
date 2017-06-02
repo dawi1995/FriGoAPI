@@ -126,6 +126,9 @@
   <data name="AuthTokenRoute" xml:space="preserve">
     <value>/api/Account/Token</value>
   </data>
+  <data name="CorsAllowAllWildcard" xml:space="preserve">
+    <value>*</value>
+  </data>
   <data name="FormDataParameterTypeName" xml:space="preserve">
     <value>formData</value>
   </data>

@@ -88,6 +88,15 @@ namespace FriGo.Api.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to *.
+        /// </summary>
+        internal static string CorsAllowAllWildcard {
+            get {
+                return ResourceManager.GetString("CorsAllowAllWildcard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to formData.
         /// </summary>
         internal static string FormDataParameterTypeName {
