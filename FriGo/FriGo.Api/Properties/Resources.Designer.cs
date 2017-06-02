@@ -88,6 +88,15 @@ namespace FriGo.Api.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to *.
+        /// </summary>
+        internal static string CorsAllowAllWildcard {
+            get {
+                return ResourceManager.GetString("CorsAllowAllWildcard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to formData.
         /// </summary>
         internal static string FormDataParameterTypeName {
@@ -156,6 +165,15 @@ namespace FriGo.Api.Properties {
         internal static string TokenGetString {
             get {
                 return ResourceManager.GetString("TokenGetString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unit was not found in our database..
+        /// </summary>
+        internal static string UnitNotFoundMessage {
+            get {
+                return ResourceManager.GetString("UnitNotFoundMessage", resourceCulture);
             }
         }
         

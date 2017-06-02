@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using FluentValidation.WebApi;
 using FriGo.Api.Filters;
 using Microsoft.Owin.Security.OAuth;
@@ -13,28 +14,37 @@ namespace FriGo.Api
 {
     public static class WebApiConfig
     {
-        public static void Register(HttpConfiguration config)
+        public static void Register(HttpConfiguration configuration)
         {
             // Web API configuration and services
             // Configure Web API to use only bearer token authentication.
-            config.SuppressDefaultHostAuthentication();
-            config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
+            configuration.SuppressDefaultHostAuthentication();
+            configuration.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
-            config.Filters.Add(new ValidateModelStateFilter());
+            configuration.Filters.Add(new ValidateModelStateFilter());
 
-            config.Formatters.JsonFormatter.SupportedMediaTypes
+            configuration.Formatters.JsonFormatter.SupportedMediaTypes
                 .Add(new MediaTypeHeaderValue("text/html"));
 
             // Web API routes
-            config.MapHttpAttributeRoutes();
+            configuration.MapHttpAttributeRoutes();
 
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+            configuration.Routes.MapHttpRoute(
+                "DefaultApi",
+                "api/{controller}/{id}",
+                new { id = RouteParameter.Optional }
             );
 
-            FluentValidationModelValidatorProvider.Configure(config);
+            ConfigureCors(configuration);
+
+            FluentValidationModelValidatorProvider.Configure(configuration);
+        }
+
+        private static void ConfigureCors(HttpConfiguration configuration)
+        {
+            string corsWildcard = Properties.Resources.CorsAllowAllWildcard;
+            var cors = new EnableCorsAttribute(corsWildcard, corsWildcard, corsWildcard);
+            configuration.EnableCors(cors);
         }
     }
 }

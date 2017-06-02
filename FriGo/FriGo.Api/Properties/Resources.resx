@@ -126,6 +126,9 @@
   <data name="AuthTokenRoute" xml:space="preserve">
     <value>/api/Account/Token</value>
   </data>
+  <data name="CorsAllowAllWildcard" xml:space="preserve">
+    <value>*</value>
+  </data>
   <data name="FormDataParameterTypeName" xml:space="preserve">
     <value>formData</value>
   </data>
@@ -149,6 +152,9 @@
   </data>
   <data name="TokenGetString" xml:space="preserve">
     <value>Token granted</value>
+  </data>
+  <data name="UnitNotFoundMessage" xml:space="preserve">
+    <value>Unit was not found in our database.</value>
   </data>
   <data name="UrlEncodedContentType" xml:space="preserve">
     <value>application/x-www-form-urlencoded</value>
