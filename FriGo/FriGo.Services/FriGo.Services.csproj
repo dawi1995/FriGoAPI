@@ -38,6 +38,7 @@
     <Compile Include="CommentService.cs" />
     <Compile Include="CrudService.cs" />
     <Compile Include="IngredientQuantityService.cs" />
+    <Compile Include="RateService.cs" />
     <Compile Include="RecipeService.cs" />
     <Compile Include="SearchEngine.cs" />
     <Compile Include="UnitService.cs" />

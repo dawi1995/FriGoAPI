@@ -83,6 +83,7 @@
     <Compile Include="DTO\Recipes\RecipeStub.cs" />
     <Compile Include="DTO\Units\EditUnit.cs" />
     <Compile Include="DTO\Account\UserStub.cs" />
+    <Compile Include="EntityConfigurations\RateConfiguration.cs" />
     <Compile Include="EntityConfigurations\TagConfiguration.cs" />
     <Compile Include="EntityConfigurations\IngredientQuantityConfiguration.cs" />
     <Compile Include="EntityConfigurations\IngredientConfiguration.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="Models\Authentication\User.cs" />
     <Compile Include="Models\Authentication\UserInfoViewModel.cs" />
     <Compile Include="Models\Authentication\UserLoginInfoViewModel.cs" />
+    <Compile Include="Models\Recipes\Rate.cs" />
     <Compile Include="Models\Social\Comment.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Error.cs" />

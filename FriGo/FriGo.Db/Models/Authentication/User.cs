@@ -11,6 +11,19 @@ namespace FriGo.Db.Models.Authentication
 {
     public class User : IdentityUser
     {
+        public override string Id
+        {
+            get
+            {
+                return base.Id;
+            }
+
+            set
+            {
+                base.Id = value;
+            }
+        }
+
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Recipe> Recipes { get; set; }
         public virtual ICollection<IngredientQuantity> IngredientQuantities { get; set; }

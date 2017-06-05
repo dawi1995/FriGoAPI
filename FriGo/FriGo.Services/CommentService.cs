@@ -11,7 +11,7 @@ using FriGo.ServiceInterfaces;
 
 namespace FriGo.Services
 {
-    class CommentService : CrudService<Comment>, ICommentService, IRequestDependency
+    class CommentService : CrudService<Comment>, IRateService, IRequestDependency
     {
         public CommentService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
