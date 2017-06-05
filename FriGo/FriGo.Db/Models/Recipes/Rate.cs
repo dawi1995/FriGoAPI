@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FriGo.Db.Models.Recipes
 {
-    class Rate : Entity
+    public class Rate : Entity
     {
         public int Rating { get; set; }
         public virtual Recipe Recipe { get; set; }

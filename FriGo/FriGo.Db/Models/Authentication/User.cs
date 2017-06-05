@@ -15,6 +15,8 @@ namespace FriGo.Db.Models.Authentication
         public virtual ICollection<Recipe> Recipes { get; set; }
         public virtual ICollection<IngredientQuantity> IngredientQuantities { get; set; }
 
+        public virtual ICollection<Rate> Rates { get; set; }
+    
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager, string authenticationType)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

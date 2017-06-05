@@ -18,10 +18,13 @@ namespace FriGo.Db.Models.Recipes
         public byte[] Picture { get; set; }
         public DateTime CreatedAt { get; set; }
 
+
+
         public virtual User User { get; set; }
 
         public virtual ICollection<IngredientQuantity> IngredientQuantities { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }
+        public virtual ICollection<Rate> Rates { get; set; }
     }
 }
