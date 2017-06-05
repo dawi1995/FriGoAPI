@@ -40,7 +40,7 @@ namespace FriGo.Api.Controllers
 
             ICollection<CommentDto> commentDto = AutoMapper.Map<ICollection<Comment>, ICollection<CommentDto>>(recipe.Comments);
 
-            return Request.CreateResponse(HttpStatusCode.Created, commentDto);
+            return Request.CreateResponse(HttpStatusCode.OK, commentDto);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace FriGo.Api.Controllers
             comment.Text = editComment.Text;
             commentService.Edit(comment);
             CommentDto commentDto = AutoMapper.Map<Comment, CommentDto>(comment);
-            return Request.CreateResponse(HttpStatusCode.Created, commentDto);
+            return Request.CreateResponse(HttpStatusCode.OK, commentDto);
         }
 
         /// <summary>
