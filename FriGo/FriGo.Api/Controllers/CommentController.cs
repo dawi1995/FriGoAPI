@@ -16,9 +16,9 @@ namespace FriGo.Api.Controllers
 {
     public class CommentController : BaseFriGoController
     {
-        private readonly IRateService commentService;
+        private readonly ICommentService commentService;
         private readonly IRecipeService recipeService;
-        public CommentController(IMapper autoMapper, IRateService commentService, IRecipeService recipeService) : base(autoMapper)
+        public CommentController(IMapper autoMapper, ICommentService commentService, IRecipeService recipeService) : base(autoMapper)
         {
             this.commentService = commentService;
             this.recipeService = recipeService;

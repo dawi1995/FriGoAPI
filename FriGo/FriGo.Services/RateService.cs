@@ -27,9 +27,9 @@ namespace FriGo.Services
             return rates;
         }
 
-        public IEnumerable<Rate> GetByUserId(Guid userId)
+        public IEnumerable<Rate> GetByUserId(string userId)
         {
-            var rates = UnitOfWork.Repository<Rate>().Get(rate => rate.User.Id == userId.ToString());
+            var rates = UnitOfWork.Repository<Rate>().Get(rate => rate.User.Id == userId);
             return rates;
         }
     }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using FriGo.Db.Models.Recipes;
+using FriGo.Db.Models.Authentication;
 
 namespace FriGo.ServiceInterfaces
 {
@@ -12,5 +13,7 @@ namespace FriGo.ServiceInterfaces
          void Add(Recipe recipe);
          void Edit(Recipe recipe);
          void Delete(Guid id);
+         decimal? GetRatingByRecipe(Recipe recipe);
+         decimal? GetRatingByUser(User user, Recipe recipe);
     }
 }

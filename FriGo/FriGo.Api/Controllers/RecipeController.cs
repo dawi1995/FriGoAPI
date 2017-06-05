@@ -12,12 +12,15 @@ using FriGo.ServiceInterfaces;
 using Swashbuckle.Swagger.Annotations;
 using System.Linq;
 using FriGo.Db.Models.Ingredients;
+using Microsoft.AspNet.Identity;
+using FriGo.Db.Models.Authentication;
 
 namespace FriGo.Api.Controllers
 {
     public class RecipeController : BaseFriGoController
     {
         private readonly IRecipeService recipeService;
+        private readonly IUserService userService;
         public RecipeController(IMapper autoMapper, IRecipeService recipeService) : base(autoMapper)
         {
             this.recipeService = recipeService;
@@ -32,9 +35,19 @@ namespace FriGo.Api.Controllers
         public virtual HttpResponseMessage Get(Guid id)
         {
             Recipe recipeResult = recipeService.Get(id);
+            User userResult = userService.Get(User.Identity.GetUserId());
             if (recipeResult != null)
             {
+
                 RecipeDto returnRecipe = AutoMapper.Map<Recipe, RecipeDto>(recipeResult);
+
+                decimal? recipeRating = recipeService.GetRatingByRecipe(recipeResult);
+                returnRecipe.Rating = recipeRating;
+
+                decimal? userRating = recipeService.GetRatingByUser(userResult, recipeResult);
+                returnRecipe.Rating = userRating;
+                
+
                 return Request.CreateResponse(HttpStatusCode.OK, returnRecipe);
             }
             else
@@ -56,6 +69,7 @@ namespace FriGo.Api.Controllers
         public virtual HttpResponseMessage Get(Tag[] tagQuery, int page = 1, int perPage = 10, string sortField = null,
             bool descending = false, string nameSearchQuery = null)
         {
+            User userResult = userService.Get(User.Identity.GetUserId());
             //if (IsEmpty(tagQuery))
             //    tagQuery = TakeAllTags().ToArray();
             if (recipeService.Engine.RawData != null)
@@ -70,6 +84,16 @@ namespace FriGo.Api.Controllers
                 if (recipeResults.Count() > 0)
                 {
                     IEnumerable<RecipeDto> returnRecipes = AutoMapper.Map<IEnumerable<Recipe>, IEnumerable<RecipeDto>>(recipeResults);
+
+                    foreach (var recipe in returnRecipes)
+                    {
+                        Recipe returnRecipe = AutoMapper.Map<RecipeDto, Recipe>(recipe);
+                        decimal? recipeRating = recipeService.GetRatingByRecipe(returnRecipe);
+                        recipe.Rating = recipeRating;
+                        decimal? userRating = recipeService.GetRatingByUser(userResult, returnRecipe);
+                        recipe.Rating = userRating;
+                    }
+
                     return Request.CreateResponse(HttpStatusCode.OK, returnRecipes);
                 }
                 else

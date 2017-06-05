@@ -16,7 +16,8 @@ namespace FriGo.Db.DTO.Recipes
         public IEnumerable<Tag> Tags { get; set;}
         public UserStub User { get; set; }
         public string Base64Picture { get; set; }
-        public decimal Rating { get; set; }
+        public decimal? Rating { get; set; }
+        public int? UserRating { get; set; }
         public DateTime CreatedAt { get; set; }
         public decimal Fitness { get; set; }
         public IEnumerable<Models.Ingredients.IngredientQuantity> MissingIngredientQuantities { get; set; }

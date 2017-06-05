@@ -2,6 +2,6 @@
 {
     public class RateRecipe
     {
-        public decimal Rate { get; set; }
+        public int Rate { get; set; }
     }
 }

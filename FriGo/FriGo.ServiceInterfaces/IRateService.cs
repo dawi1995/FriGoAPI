@@ -13,7 +13,7 @@ namespace FriGo.ServiceInterfaces
         IEnumerable<Rate> Get();
         Rate Get(Guid id);
 
-        IEnumerable<Rate> GetByUserId(Guid userId);
+        IEnumerable<Rate> GetByUserId(string userId);
         IEnumerable<Rate> GetByRecipeId(Guid recipeId);
         void Add(Rate rate);
         void Edit(Rate rate);

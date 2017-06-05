@@ -8,26 +8,25 @@ using FriGo.Db.DTO.Recipes;
 using FriGo.Db.Models;
 using FriGo.ServiceInterfaces;
 using Swashbuckle.Swagger.Annotations;
+using Microsoft.AspNet.Identity;
+using FriGo.Db.Models.Authentication;
+using FriGo.Db.Models.Recipes;
 
 namespace FriGo.Api.Controllers
 {
     public class RateController : BaseFriGoController
     {
-        public RateController(IMapper autoMapper) : base(autoMapper)
+        private readonly IRateService rateService;
+        private readonly IRecipeService recipeService;
+        private readonly IUserService userService;
+
+        public RateController(IMapper autoMapper, IRateService rateService, IRecipeService recipeService, IUserService userService) : base(autoMapper)
         {
+            this.rateService = rateService;
+            this.recipeService = recipeService;
+            this.userService = userService;
         }
 
-        /// <summary>
-        /// Get rating of recipe
-        /// </summary>
-        /// <param name="recipeId"></param>
-        /// <returns>Rating of a recipe</returns>
-        [SwaggerResponse(HttpStatusCode.OK, Type = typeof(decimal), Description = "Rate")]
-        [SwaggerResponse(HttpStatusCode.NotFound, Description = "Not found")]
-        public virtual HttpResponseMessage Get(Guid recipeId)
-        {
-            throw new NotImplementedException();
-        }
 
         /// <summary>
         /// Rate recipe
@@ -43,7 +42,38 @@ namespace FriGo.Api.Controllers
         [Authorize]
         public virtual HttpResponseMessage Put(Guid recipeId, RateRecipe rateRecipe)
         {
-            throw new NotImplementedException();
+            var user = userService.Get(User.Identity.GetUserId());
+            var recipe = recipeService.Get(recipeId);
+            var ratesForUser = recipeService.GetRatingByUser(user, recipe);
+            if (recipe == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            if (recipe.User.Id != User.Identity.GetUserId())
+            {
+                return Request.CreateResponse(HttpStatusCode.Unauthorized);
+            }
+            if (ratesForUser == null)
+            {
+                Rate rate = AutoMapper.Map<RateRecipe, Rate>(rateRecipe);
+                rate.Recipe = recipe;
+                rate.User = user;
+                recipe.Rates.Add(rate);
+                rateService.Add(rate);
+                return Request.CreateResponse(HttpStatusCode.OK, rate);
+            }
+
+            foreach (var rateById in rateService.GetByRecipeId(recipeId))
+            {
+                foreach (var rateByUser in rateService.GetByUserId(User.Identity.GetUserId()))
+                {
+                    if (rateById.Id == rateByUser.Id)
+                    {
+                        rateById.Rating = rateRecipe.Rate;
+                        rateService.Edit(rateById);
+                        return Request.CreateResponse(HttpStatusCode.OK, rateById);
+                    }
+                }
+            }
+            return Request.CreateResponse(HttpStatusCode.NotFound);
         }
     }
 }
