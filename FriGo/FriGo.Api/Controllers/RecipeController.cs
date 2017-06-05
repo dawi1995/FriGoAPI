@@ -101,7 +101,46 @@ namespace FriGo.Api.Controllers
         [Authorize]
         public virtual HttpResponseMessage Post(Guid id, CreateRecipe createRecipe)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    Recipe newRecipe = MapCreateRecipeToRecipe(createRecipe);
+                    recipeService.Add(newRecipe);
+
+                    return Request.CreateResponse(HttpStatusCode.OK, newRecipe);
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest);
+                }
+
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        private Recipe MapCreateRecipeToRecipe(CreateRecipe createRecipe)
+        {
+            Recipe recipe = new Recipe()
+            {
+                Title = createRecipe.Title,
+                Description = createRecipe.Description,
+                Rating = 0,
+                User = null,
+                IngredientQuantities = createRecipe.CreateIngredientQuantities.Select(a => new IngredientQuantity()
+                {
+                    Description = a.Description,
+                    Quantity = a.Quantity
+                }).ToList(),
+                Tags = createRecipe.Tags.Select(a => new Tag()
+                {
+                    Name = a.Name
+                }).ToList()
+            };
+            return recipe;
         }
 
         /// <summary>
@@ -115,7 +154,15 @@ namespace FriGo.Api.Controllers
         [Authorize]
         public virtual HttpResponseMessage Delete(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                recipeService.Delete(id);
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
         }
     }
 
