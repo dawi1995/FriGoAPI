@@ -18,9 +18,11 @@ namespace FriGo.Api.Controllers
     public class RecipeController : BaseFriGoController
     {
         private readonly IRecipeService recipeService;
-        public RecipeController(IMapper autoMapper, IRecipeService recipeService) : base(autoMapper)
+        private readonly IFitnessService fitnessService;
+        public RecipeController(IMapper autoMapper, IRecipeService recipeService, IFitnessService fitnessService) : base(autoMapper)
         {
             this.recipeService = recipeService;
+            this.fitnessService = fitnessService;
         }
 
         /// <summary>
@@ -64,7 +66,7 @@ namespace FriGo.Api.Controllers
                 recipeService.Engine.FilterByName(nameSearchQuery);
                 recipeService.Engine.FilterByTag(tagQuery);
                 recipeService.Engine.SortByField(sortField, descending);
-                fitnessService.Engine.SortByFitness(fitness); //do implementacji sortowanie
+                fitnessService.EngineFitness.SortByFitness(fitness); //do implementacji sortowanie
 
                 IEnumerable<Recipe> recipeResults = recipeService.Engine.ProcessedRecipes
                                                         .Skip((page - 1) * perPage).Take(perPage);
