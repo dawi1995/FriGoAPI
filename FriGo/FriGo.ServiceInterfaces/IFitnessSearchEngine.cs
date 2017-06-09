@@ -7,9 +7,9 @@ namespace FriGo.ServiceInterfaces
     public interface IFitnessSearchEngine
     {
         IEnumerable<IngredientQuantity> RawData { get; }
-        decimal UserFitnessStatus();
-        decimal RecipeFitnessStatus();
-        decimal Fitness();
+        decimal CalculateUserFitness();
+        decimal CalculateRecipeFitness();
+        decimal CalculateFitness();
         void SortByFitness(decimal fitness);
 
     }

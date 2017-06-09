@@ -11,7 +11,7 @@ namespace FriGo.Services
         public IFitnessSearchEngine EngineFitness { get; set; }
         public FitnessService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            EngineFitness = new FitnessSearchEngine(this.Get());
+            EngineFitness = new FitnessSearchEngine(Get());
         }
     }
 }

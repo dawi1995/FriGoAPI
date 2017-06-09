@@ -9,7 +9,7 @@ namespace FriGo.Services
 {
     public class FitnessSearchEngine : IFitnessSearchEngine
     {
-        private IEnumerable<IngredientQuantity> enumerable;
+        private IEnumerable<IngredientQuantity> quantities;
 
         public IEnumerable<IngredientQuantity> RawData { get; private set; }
         public IEnumerable<Recipe> RawRecipeData { get; private set; }
@@ -20,17 +20,17 @@ namespace FriGo.Services
         }
 
 
-        public decimal UserFitnessStatus()
+        public decimal CalculateUserFitness()
         {
             return RawData.Sum(x => x.Quantity);
         }
-        public decimal RecipeFitnessStatus()
+        public decimal CalculateRecipeFitness()
         {
             return RawRecipeData.Sum(x => x.IngredientQuantities.Sum(z => z.Quantity));
         }
-        public decimal Fitness()
+        public decimal CalculateFitness()
         {
-            return (UserFitnessStatus() / RecipeFitnessStatus()) * 100;
+            return (CalculateUserFitness() / CalculateRecipeFitness()) * 100;
         }
         public void SortByFitness(decimal fitness)
         {
