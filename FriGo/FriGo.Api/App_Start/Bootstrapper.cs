@@ -10,6 +10,8 @@ using FriGo.DAL;
 using FriGo.Db.Models;
 using FriGo.Interfaces.Dependencies;
 using FriGo.Services;
+using FriGo.Db.Models.Social;
+using FriGo.Db.DTO.Social;
 
 namespace FriGo.Api
 {
@@ -95,6 +97,14 @@ namespace FriGo.Api
             var mapperConfiguration = new MapperConfiguration(configuration =>
             {
                 configuration.CreateMissingTypeMaps = true;
+
+                configuration.CreateMap<CreateComment, Comment>()
+                    .ForMember(comment => comment.Picture,
+                    opt => opt.MapFrom(commentDto => Convert.FromBase64String((commentDto.Base64Picture))));
+
+                configuration.CreateMap<Comment, CommentDto>()
+                .ForMember(commentDto => commentDto.Base64Picture,
+                opt => opt.MapFrom(comment => Convert.ToBase64String(comment.Picture)));
             });
             IMapper mapper = mapperConfiguration.CreateMapper();
 

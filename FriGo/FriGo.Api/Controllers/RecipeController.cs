@@ -18,9 +18,11 @@ namespace FriGo.Api.Controllers
     public class RecipeController : BaseFriGoController
     {
         private readonly IRecipeService recipeService;
-        public RecipeController(IMapper autoMapper, IRecipeService recipeService) : base(autoMapper)
+        private readonly IFitnessService fitnessService;
+        public RecipeController(IMapper autoMapper, IRecipeService recipeService, IFitnessService fitnessService) : base(autoMapper)
         {
             this.recipeService = recipeService;
+            this.fitnessService = fitnessService;
         }
 
         /// <summary>
@@ -47,13 +49,14 @@ namespace FriGo.Api.Controllers
         /// <param name="page">Number of page</param>
         /// <param name="perPage">Count per page</param>
         /// <param name="sortField">Sorting by field</param>
+        /// <param name="fitness">Sorting by fitness</param>
         /// <param name="descending">Sorting order</param>
         /// <param name="nameSearchQuery">Search by name</param>
         /// <param name="tagQuery">Search by tags</param>
         /// <returns></returns>
-        
+
         [SwaggerResponse(HttpStatusCode.OK, Type = typeof(RecipeDto))]
-        public virtual HttpResponseMessage Get(Tag[] tagQuery, int page = 1, int perPage = 10, string sortField = null,
+        public virtual HttpResponseMessage Get(Tag[] tagQuery, int page = 1, int perPage = 10, string sortField = null, decimal fitness=0,
             bool descending = false, string nameSearchQuery = null)
         {
             //if (IsEmpty(tagQuery))
@@ -63,6 +66,7 @@ namespace FriGo.Api.Controllers
                 recipeService.Engine.FilterByName(nameSearchQuery);
                 recipeService.Engine.FilterByTag(tagQuery);
                 recipeService.Engine.SortByField(sortField, descending);
+                fitnessService.EngineFitness.SortByFitness(fitness); //do implementacji sortowanie
 
                 IEnumerable<Recipe> recipeResults = recipeService.Engine.ProcessedRecipes
                                                         .Skip((page - 1) * perPage).Take(perPage);
