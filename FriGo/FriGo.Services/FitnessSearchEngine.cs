@@ -9,36 +9,36 @@ namespace FriGo.Services
 {
     public class FitnessSearchEngine : IFitnessSearchEngine
     {
-        private IEnumerable<IngredientQuantity> quantities;
-
+       
         public IEnumerable<IngredientQuantity> RawData { get; private set; }
         public IEnumerable<Recipe> RawRecipeData { get; private set; }
+        public IEnumerable<KeyValuePair<Recipe, int>> ProcessedData { get; private set; }
 
         public FitnessSearchEngine(IEnumerable<IngredientQuantity> quantities)
         {
             RawData = quantities;
         }
 
-        public IEnumerable<Recipe> CalculateFitness(decimal minFitness)
+        public int CalculateFitness(Recipe recipe)
         {
-            IEnumerable<Recipe> fittingRecipes = RawRecipeData.Select(r=> 
+            double fitness = recipe.IngredientQuantities
+            .Select(recipeIQ =>
             {
-                decimal fitness = r.IngredientQuantities.Select(recipeIQ =>
-                {
-                    decimal fridgeQ = RawData
-                    .Where(fridgeItem => fridgeItem.Ingredient.Id == recipeIQ.Ingredient.Id)
+                decimal fridgeQuantity = RawData
+                    .Where(x => x.Ingredient.Id == recipeIQ.Ingredient.Id)
                     .Sum(x => x.Quantity);
-                    return Math.Min(1, fridgeQ / recipeIQ.Quantity);
-                }).Sum() / r.IngredientQuantities.Count * 100;
-                return new { Fitness = fitness, Recipe = r };
-            }).Where(fr => fr.Fitness >= minFitness)
-            .Select(fr => fr.Recipe);
-            return fittingRecipes;
+                return Math.Min(1,(double)fridgeQuantity / (double)recipeIQ.Quantity);
+            }).Sum() / recipe.IngredientQuantities.Count * 100;
+            return (int)fitness;
         }
-
-        public IEnumerable<Recipe> SortByFitness(decimal fitness)
+        public void SortByFitness(int fitness)
         {
-            throw new NotImplementedException();
+            ProcessedData = RawRecipeData
+                .Select(recipe => {
+                    return new KeyValuePair<Recipe, int>(recipe, CalculateFitness(recipe));
+                })
+                .OrderBy(keyValue => keyValue.Value)
+                .Where(keyValue => keyValue.Value <= fitness);
         }
     }
 }

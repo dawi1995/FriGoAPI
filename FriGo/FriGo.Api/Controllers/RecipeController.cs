@@ -56,7 +56,7 @@ namespace FriGo.Api.Controllers
         /// <returns></returns>
 
         [SwaggerResponse(HttpStatusCode.OK, Type = typeof(RecipeDto))]
-        public virtual HttpResponseMessage Get(Tag[] tagQuery, int page = 1, int perPage = 10, string sortField = null, decimal fitness=0,
+        public virtual HttpResponseMessage Get(Tag[] tagQuery, int page = 1, int perPage = 10, string sortField = null, int fitness=0,
             bool descending = false, string nameSearchQuery = null)
         {
             //if (IsEmpty(tagQuery))
@@ -66,14 +66,25 @@ namespace FriGo.Api.Controllers
                 recipeService.Engine.FilterByName(nameSearchQuery);
                 recipeService.Engine.FilterByTag(tagQuery);
                 recipeService.Engine.SortByField(sortField, descending);
-                fitnessService.EngineFitness.SortByFitness(fitness); //do implementacji sortowanie
+                // chyba trzeba przekazać jakoś wyniki filtrowania z recipeService.Engine do EngineFitness
+                fitnessService.EngineFitness.SortByFitness(fitness); 
 
-                IEnumerable<Recipe> recipeResults = recipeService.Engine.ProcessedRecipes
-                                                        .Skip((page - 1) * perPage).Take(perPage);
+               // IEnumerable<Recipe> recipeResults = recipeService.Engine.ProcessedRecipes
+                //                                        .Skip((page - 1) * perPage).Take(perPage);
+
+                IEnumerable<KeyValuePair<Recipe, int>> recipeResults 
+                    = fitnessService.EngineFitness.ProcessedData
+                    .Skip((page - 1) * perPage).Take(perPage);
 
                 if (recipeResults.Count() > 0)
                 {
-                    IEnumerable<RecipeDto> returnRecipes = AutoMapper.Map<IEnumerable<Recipe>, IEnumerable<RecipeDto>>(recipeResults);
+                    //IEnumerable<RecipeDto> returnRecipes = AutoMapper.Map<IEnumerable<Recipe>, IEnumerable<RecipeDto>>(recipeResults);
+                    IEnumerable<RecipeDto> returnRecipes = recipeResults
+                        .Select(recipeResult => {
+                   return AutoMapper.Map<Recipe, RecipeDto>(recipeResult.Key, opts => {
+                       opts.AfterMap((src, dest) => dest.Fitness = recipeResult.Value);
+                   });
+               });
                     return Request.CreateResponse(HttpStatusCode.OK, returnRecipes);
                 }
                 else
@@ -84,10 +95,6 @@ namespace FriGo.Api.Controllers
         private bool IsEmpty(Tag[] tagQuery)
         {
             return tagQuery.Count() > 0;
-        }
-        private ICollection<Tag> TakeAllTags()
-        {
-            throw new NotImplementedException();
         }
         
 
