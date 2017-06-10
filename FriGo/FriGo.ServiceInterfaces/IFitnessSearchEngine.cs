@@ -1,5 +1,6 @@
 ﻿
 using FriGo.Db.Models.Ingredients;
+using FriGo.Db.Models.Recipes;
 using System.Collections.Generic;
 
 namespace FriGo.ServiceInterfaces
@@ -7,10 +8,8 @@ namespace FriGo.ServiceInterfaces
     public interface IFitnessSearchEngine
     {
         IEnumerable<IngredientQuantity> RawData { get; }
-        decimal CalculateUserFitness();
-        decimal CalculateRecipeFitness();
-        decimal CalculateFitness();
-        void SortByFitness(decimal fitness);
+        
+        IEnumerable<Recipe> CalculateFitness(decimal fitness);
 
     }
 }

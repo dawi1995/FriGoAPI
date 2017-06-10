@@ -19,22 +19,26 @@ namespace FriGo.Services
             RawData = quantities;
         }
 
+        public IEnumerable<Recipe> CalculateFitness(decimal minFitness)
+        {
+            IEnumerable<Recipe> fittingRecipes = RawRecipeData.Select(r=> 
+            {
+                decimal fitness = r.IngredientQuantities.Select(recipeIQ =>
+                {
+                    decimal fridgeQ = RawData
+                    .Where(fridgeItem => fridgeItem.Ingredient.Id == recipeIQ.Ingredient.Id)
+                    .Sum(x => x.Quantity);
+                    return Math.Min(1, fridgeQ / recipeIQ.Quantity);
+                }).Sum() / r.IngredientQuantities.Count * 100;
+                return new { Fitness = fitness, Recipe = r };
+            }).Where(fr => fr.Fitness >= minFitness)
+            .Select(fr => fr.Recipe);
+            return fittingRecipes;
+        }
 
-        public decimal CalculateUserFitness()
+        public IEnumerable<Recipe> SortByFitness(decimal fitness)
         {
-            return RawData.Sum(x => x.Quantity);
-        }
-        public decimal CalculateRecipeFitness()
-        {
-            return RawRecipeData.Sum(x => x.IngredientQuantities.Sum(z => z.Quantity));
-        }
-        public decimal CalculateFitness()
-        {
-            return (CalculateUserFitness() / CalculateRecipeFitness()) * 100;
-        }
-        public void SortByFitness(decimal fitness)
-        {
-            //do implementacji
+            throw new NotImplementedException();
         }
     }
 }
