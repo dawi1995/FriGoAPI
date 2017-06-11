@@ -15,7 +15,7 @@ namespace FriGo.Db.DTO.Recipes
         public IEnumerable<CommentDto> Comments { get; set; }
         public IEnumerable<Tag> Tags { get; set;}
         public UserStub User { get; set; }
-        public string Base64Picture { get; set; }
+        public string ImageUrl { get; set; }
         public decimal Rating { get; set; }
         public DateTime CreatedAt { get; set; }
         public decimal Fitness { get; set; }
