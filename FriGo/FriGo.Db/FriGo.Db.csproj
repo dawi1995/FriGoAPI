@@ -96,6 +96,7 @@
     <Compile Include="Models\Authentication\User.cs" />
     <Compile Include="Models\Authentication\UserInfoViewModel.cs" />
     <Compile Include="Models\Authentication\UserLoginInfoViewModel.cs" />
+    <Compile Include="Models\Image.cs" />
     <Compile Include="Models\Social\Comment.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Error.cs" />
