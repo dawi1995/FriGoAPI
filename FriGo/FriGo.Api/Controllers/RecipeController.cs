@@ -12,15 +12,20 @@ using FriGo.ServiceInterfaces;
 using Swashbuckle.Swagger.Annotations;
 using System.Linq;
 using FriGo.Db.Models.Ingredients;
+using Microsoft.AspNet.Identity;
+using System.Threading.Tasks;
 
 namespace FriGo.Api.Controllers
 {
     public class RecipeController : BaseFriGoController
     {
         private readonly IRecipeService recipeService;
-        public RecipeController(IMapper autoMapper, IRecipeService recipeService) : base(autoMapper)
+        private readonly IUserService userService;
+
+        public RecipeController(IMapper autoMapper, IRecipeService recipeService, IUserService userService) : base(autoMapper)
         {
             this.recipeService = recipeService;
+            this.userService = userService;
         }
 
         /// <summary>
@@ -99,48 +104,25 @@ namespace FriGo.Api.Controllers
         [SwaggerResponse(HttpStatusCode.Created, Type = typeof(RecipeDto), Description = "Recipe created")]
         [SwaggerResponse(HttpStatusCode.Unauthorized, Type = typeof(Error), Description = "Forbidden")]
         [Authorize]
-        public virtual HttpResponseMessage Post(Guid id, CreateRecipe createRecipe)
+        public virtual IHttpActionResult Post(Guid id, CreateRecipe createRecipe)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    Recipe newRecipe = MapCreateRecipeToRecipe(createRecipe);
-                    recipeService.Add(newRecipe);
-
-                    return Request.CreateResponse(HttpStatusCode.OK, newRecipe);
-                }
-                else
-                {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest);
-                }
-
+                return BadRequest(ModelState);
             }
-            catch
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError);
-            }
-        }
 
-        private Recipe MapCreateRecipeToRecipe(CreateRecipe createRecipe)
-        {
-            Recipe recipe = new Recipe()
-            {
-                Title = createRecipe.Title,
-                Description = createRecipe.Description,
-                Rating = 0,
-                User = null,
-                IngredientQuantities = createRecipe.CreateIngredientQuantities.Select(a => new IngredientQuantity()
-                {
-                    Description = a.Description,
-                    Quantity = a.Quantity
-                }).ToList(),
-                Tags = createRecipe.Tags.Select(a => new Tag()
-                {
-                    Name = a.Name
-                }).ToList()
-            };
-            return recipe;
+            Recipe newRecipe = AutoMapper.Map<CreateRecipe,Recipe>(createRecipe);
+
+            var uid = User.Identity.GetUserId();
+            FriGo.Db.Models.Authentication.User user = userService.Get(uid);
+
+            if (user == null)
+                return Unauthorized();
+
+            newRecipe.User = user;
+            recipeService.Add(newRecipe);
+
+            return Created("",newRecipe);
         }
 
         /// <summary>
@@ -154,16 +136,62 @@ namespace FriGo.Api.Controllers
         [Authorize]
         public virtual HttpResponseMessage Delete(Guid id)
         {
-            try
-            {
-                recipeService.Delete(id);
-                return Request.CreateResponse(HttpStatusCode.OK);
-            }
-            catch
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError);
-            }
+            var uid = User.Identity.GetUserId();
+            FriGo.Db.Models.Authentication.User user = userService.Get(uid);
+            Recipe recipe = recipeService.Get(id);
+
+            if(recipe == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+
+            if (recipe.User != user)
+                return Request.CreateResponse(HttpStatusCode.Unauthorized);
+
+            recipeService.Delete(id);
+            return Request.CreateResponse(HttpStatusCode.NoContent);
         }
+
+        private IHttpActionResult GetErrorResult(IdentityResult result)
+        {
+            if (result == null)
+            {
+                return InternalServerError();
+            }
+
+            if (result.Succeeded) return null;
+            if (result.Errors != null)
+            {
+                foreach (string error in result.Errors)
+                {
+                    ModelState.AddModelError("", error);
+                }
+            }
+
+            if (ModelState.IsValid)
+            {
+                // No ModelState errors are available to send, so just return an empty BadRequest.
+                return BadRequest();
+            }
+
+            return BadRequest(ModelState);
+        }
+        /* Upload file example
+         * 
+        public async Task<byte[]> UploadImage()
+        {
+            if (!Request.Content.IsMimeMultipartContent())
+                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+
+            var provider = new MultipartMemoryStreamProvider();
+            await Request.Content.ReadAsMultipartAsync(provider);
+
+            if (provider.Contents.Count == 0) return null;
+
+            var file = provider.Contents[0];
+            var filename = file.Headers.ContentDisposition.FileName.Trim('\"');
+            var buffer = await file.ReadAsByteArrayAsync();
+            return buffer;
+        }
+        */
     }
 
 }
