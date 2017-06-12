@@ -39,6 +39,7 @@
     <Compile Include="IFitnessService.cs" />
     <Compile Include="IRecipeService.cs" />
     <Compile Include="ISearchEngine.cs" />
+    <Compile Include="ITagService.cs" />
     <Compile Include="IUnitService.cs" />
     <Compile Include="IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

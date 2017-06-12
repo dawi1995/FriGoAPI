@@ -42,6 +42,7 @@
     <Compile Include="IngredientQuantityService.cs" />
     <Compile Include="RecipeService.cs" />
     <Compile Include="SearchEngine.cs" />
+    <Compile Include="TagService.cs" />
     <Compile Include="UnitService.cs" />
     <Compile Include="IngredientService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
