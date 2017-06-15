@@ -9,10 +9,10 @@ namespace FriGo.ServiceInterfaces
     {
         IEnumerable<IngredientQuantity> RawData { get; }
         IEnumerable<Recipe> RawRecipeData { get; }
-        IEnumerable<KeyValuePair<Recipe, int>> ProcessedData { get; }
+        IEnumerable<KeyValuePair<Recipe, decimal>> ProcessedData { get; }
 
-        int CalculateFitness(Recipe recipe);
-        void SortByFitness(int fitness);
+        decimal CalculateFitness(Recipe recipe);
+        void SortByFitness(decimal fitness);
 
     }
 }

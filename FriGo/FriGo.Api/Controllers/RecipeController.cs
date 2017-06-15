@@ -56,35 +56,34 @@ namespace FriGo.Api.Controllers
         /// <returns></returns>
 
         [SwaggerResponse(HttpStatusCode.OK, Type = typeof(RecipeDto))]
-        public virtual HttpResponseMessage Get(Tag[] tagQuery, int page = 1, int perPage = 10, string sortField = null, int fitness=0,
+        public virtual HttpResponseMessage Get(Tag[] tagQuery, int page = 1, int perPage = 10, string sortField = null, decimal fitness = 0,
             bool descending = false, string nameSearchQuery = null)
         {
-            //if (IsEmpty(tagQuery))
-            //    tagQuery = TakeAllTags().ToArray();
+
             if (recipeService.Engine.RawData != null)
             {
                 recipeService.Engine.FilterByName(nameSearchQuery);
                 recipeService.Engine.FilterByTag(tagQuery);
                 recipeService.Engine.SortByField(sortField, descending);
-                // chyba trzeba przekazać jakoś wyniki filtrowania z recipeService.Engine do EngineFitness
-                fitnessService.EngineFitness.SortByFitness(fitness); 
+                fitnessService.EngineFitness.SortByFitness(fitness);
 
-               // IEnumerable<Recipe> recipeResults = recipeService.Engine.ProcessedRecipes
-                //                                        .Skip((page - 1) * perPage).Take(perPage);
 
-                IEnumerable<KeyValuePair<Recipe, int>> recipeResults 
+
+                IEnumerable<KeyValuePair<Recipe, decimal>> recipeResults
                     = fitnessService.EngineFitness.ProcessedData
                     .Skip((page - 1) * perPage).Take(perPage);
 
                 if (recipeResults.Count() > 0)
                 {
-                    //IEnumerable<RecipeDto> returnRecipes = AutoMapper.Map<IEnumerable<Recipe>, IEnumerable<RecipeDto>>(recipeResults);
+
                     IEnumerable<RecipeDto> returnRecipes = recipeResults
-                        .Select(recipeResult => {
-                   return AutoMapper.Map<Recipe, RecipeDto>(recipeResult.Key, opts => {
-                       opts.AfterMap((src, dest) => dest.Fitness = recipeResult.Value);
-                   });
-               });
+                        .Select(recipeResult =>
+                        {
+                            return AutoMapper.Map<Recipe, RecipeDto>(recipeResult.Key, opts =>
+                            {
+                                opts.AfterMap((src, dest) => dest.Fitness = recipeResult.Value);
+                            });
+                        });
                     return Request.CreateResponse(HttpStatusCode.OK, returnRecipes);
                 }
                 else

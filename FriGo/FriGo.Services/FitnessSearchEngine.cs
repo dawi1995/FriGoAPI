@@ -12,30 +12,31 @@ namespace FriGo.Services
        
         public IEnumerable<IngredientQuantity> RawData { get; private set; }
         public IEnumerable<Recipe> RawRecipeData { get; private set; }
-        public IEnumerable<KeyValuePair<Recipe, int>> ProcessedData { get; private set; }
+        public IEnumerable<KeyValuePair<Recipe, decimal>> ProcessedData { get; private set; }
+        const decimal minFitness = 0.01m;
 
         public FitnessSearchEngine(IEnumerable<IngredientQuantity> quantities)
         {
             RawData = quantities;
         }
 
-        public int CalculateFitness(Recipe recipe)
+        public decimal CalculateFitness(Recipe recipe)
         {
-            double fitness = recipe.IngredientQuantities
+            decimal fitness = recipe.IngredientQuantities
             .Select(recipeIQ =>
             {
                 decimal fridgeQuantity = RawData
                     .Where(x => x.Ingredient.Id == recipeIQ.Ingredient.Id)
                     .Sum(x => x.Quantity);
-                return Math.Min(1,(double)fridgeQuantity / (double)recipeIQ.Quantity);
-            }).Sum() / recipe.IngredientQuantities.Count * 100;
-            return (int)fitness;
+                return Math.Min(minFitness,fridgeQuantity /recipeIQ.Quantity);
+            }).Sum() / recipe.IngredientQuantities.Count;
+            return fitness;
         }
-        public void SortByFitness(int fitness)
+        public void SortByFitness(decimal fitness)
         {
             ProcessedData = RawRecipeData
                 .Select(recipe => {
-                    return new KeyValuePair<Recipe, int>(recipe, CalculateFitness(recipe));
+                    return new KeyValuePair<Recipe, decimal>(recipe, CalculateFitness(recipe));
                 })
                 .OrderBy(keyValue => keyValue.Value)
                 .Where(keyValue => keyValue.Value <= fitness);
