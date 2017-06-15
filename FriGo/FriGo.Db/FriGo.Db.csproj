@@ -69,6 +69,8 @@
     <Compile Include="DTO\IngredientQuantities\EditIngredientQuantity.cs" />
     <Compile Include="DTO\Ingredients\IngredientDto.cs" />
     <Compile Include="DTO\Recipes\CreateRecipe.cs" />
+    <Compile Include="DTO\Recipes\CreateRecipeNote.cs" />
+    <Compile Include="DTO\Recipes\EditRecipeNote.cs" />
     <Compile Include="DTO\Recipes\RateRecipe.cs" />
     <Compile Include="DTO\Recipes\RecipeDto.cs" />
     <Compile Include="DTO\Social\CommentStub.cs" />
@@ -83,9 +85,10 @@
     <Compile Include="DTO\Recipes\RecipeStub.cs" />
     <Compile Include="DTO\Units\EditUnit.cs" />
     <Compile Include="DTO\Account\UserStub.cs" />
+    <Compile Include="EntityConfigurations\IngredientConfiguration.cs" />
     <Compile Include="EntityConfigurations\TagConfiguration.cs" />
     <Compile Include="EntityConfigurations\IngredientQuantityConfiguration.cs" />
-    <Compile Include="EntityConfigurations\IngredientConfiguration.cs" />
+    <Compile Include="EntityConfigurations\RecipeNoteConfiguration.cs" />
     <Compile Include="FrigoContext.cs" />
     <Compile Include="FrigoDbInitializer.cs" />
     <Compile Include="Models\Authentication\ChangePasswordBindingModel.cs" />
@@ -98,6 +101,7 @@
     <Compile Include="Models\Authentication\UserInfoViewModel.cs" />
     <Compile Include="Models\Authentication\UserLoginInfoViewModel.cs" />
     <Compile Include="Models\Image.cs" />
+    <Compile Include="Models\Recipes\RecipeNote.cs" />
     <Compile Include="Models\Social\Comment.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Error.cs" />
