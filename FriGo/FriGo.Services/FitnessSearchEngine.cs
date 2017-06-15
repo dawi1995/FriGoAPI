@@ -19,7 +19,6 @@ namespace FriGo.Services
         {
             RawData = quantities;
         }
-
         public decimal CalculateFitness(Recipe recipe)
         {
             decimal fitness = recipe.IngredientQuantities

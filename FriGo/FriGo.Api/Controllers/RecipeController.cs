@@ -75,15 +75,7 @@ namespace FriGo.Api.Controllers
 
                 if (recipeResults.Count() > 0)
                 {
-
-                    IEnumerable<RecipeDto> returnRecipes = recipeResults
-                        .Select(recipeResult =>
-                        {
-                            return AutoMapper.Map<Recipe, RecipeDto>(recipeResult.Key, opts =>
-                            {
-                                opts.AfterMap((src, dest) => dest.Fitness = recipeResult.Value);
-                            });
-                        });
+                    IEnumerable<RecipeDto> returnRecipes = AutoMapper.Map<IEnumerable<KeyValuePair<Recipe, decimal>>, IEnumerable<RecipeDto>>(recipeResults);
                     return Request.CreateResponse(HttpStatusCode.OK, returnRecipes);
                 }
                 else
