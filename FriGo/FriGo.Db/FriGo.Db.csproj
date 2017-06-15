@@ -89,6 +89,7 @@
     <Compile Include="FrigoContext.cs" />
     <Compile Include="FrigoDbInitializer.cs" />
     <Compile Include="Models\Authentication\ChangePasswordBindingModel.cs" />
+    <Compile Include="Models\Authentication\RecipeBindingModel.cs" />
     <Compile Include="Models\Authentication\RegisterBindingModel.cs" />
     <Compile Include="Models\Authentication\SetPasswordBindingModel.cs" />
     <Compile Include="Models\Authentication\TokenErrorResponse.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Models\Ingredients\Unit.cs" />
     <Compile Include="Models\Recipes\Recipe.cs" />
     <Compile Include="Models\Recipes\Tag.cs" />
+    <Compile Include="ModelValidators\RecipeValidator.cs" />
     <Compile Include="ModelValidators\RegisterValidator.cs" />
     <Compile Include="ModelValidators\IngredientQuantityValidator.cs" />
     <Compile Include="ModelValidators\IngredientValidator.cs" />
