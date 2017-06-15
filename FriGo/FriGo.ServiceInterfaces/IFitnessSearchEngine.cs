@@ -12,6 +12,8 @@ namespace FriGo.ServiceInterfaces
         IEnumerable<KeyValuePair<Recipe, decimal>> ProcessedData { get; }
 
         decimal CalculateFitness(Recipe recipe);
+        decimal CheckForSufficiency(decimal fridgeQuantity, IngredientQuantity quantities);
+        decimal CalculateFridgeFitness(IngredientQuantity quantities);
         void SortByFitness(decimal fitness);
 
     }
