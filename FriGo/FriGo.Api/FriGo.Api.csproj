@@ -256,6 +256,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseFriGoController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
+    <Compile Include="Controllers\RecipeNoteController.cs" />
     <Compile Include="Controllers\IngredientQuantityController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\TagController.cs" />
@@ -359,6 +360,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

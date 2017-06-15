@@ -129,6 +129,9 @@
   <data name="CorsAllowAllWildcard" xml:space="preserve">
     <value>*</value>
   </data>
+  <data name="EntityNotFound" xml:space="preserve">
+    <value>{0} was not found in out database.</value>
+  </data>
   <data name="FormDataParameterTypeName" xml:space="preserve">
     <value>formData</value>
   </data>
