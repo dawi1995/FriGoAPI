@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -28,11 +29,12 @@ namespace FriGo.Api.Controllers
         /// <summary>
         /// Returns all notes
         /// </summary>
-        /// <returns>An array of all notes</returns>
+        /// <returns>An array of user's notes</returns>
         [SwaggerResponse(HttpStatusCode.OK, Type = typeof(IEnumerable<RecipeNote>))]
         public virtual HttpResponseMessage Get()
         {
             IEnumerable<RecipeNote> recipeNotes = recipeNoteService.Get();
+            recipeNotes = recipeNotes.Where(recipeNote => recipeNote.UserId == new Guid(User.Identity.GetUserId()));
 
             return Request.CreateResponse(HttpStatusCode.OK, recipeNotes);
         }
@@ -43,11 +45,15 @@ namespace FriGo.Api.Controllers
         /// <param name="id"></param>
         /// <returns>One note</returns>
         [SwaggerResponse(HttpStatusCode.OK, Type = typeof(IngredientDto))]
+        [SwaggerResponse(HttpStatusCode.Forbidden)]
         public virtual HttpResponseMessage Get(Guid id)
         {
             RecipeNote recipeNote = recipeNoteService.Get(id);
+            bool isNoteByLoggedUser = recipeNote.UserId == new Guid(User.Identity.GetUserId());
 
-            return Request.CreateResponse(HttpStatusCode.OK, recipeNote);
+            return isNoteByLoggedUser
+                ? Request.CreateResponse(HttpStatusCode.OK, recipeNote)
+                : Request.CreateResponse(HttpStatusCode.Forbidden);
         }
 
         /// <summary>
@@ -74,6 +80,7 @@ namespace FriGo.Api.Controllers
         /// <returns>Modified note</returns>
         [SwaggerResponse(HttpStatusCode.OK, Type = typeof(RecipeNote), Description = "Recipe note updated")]
         [SwaggerResponse(HttpStatusCode.Unauthorized, Type = typeof(Error), Description = "Forbidden")]
+        [SwaggerResponse(HttpStatusCode.Forbidden, Type = typeof(Error), Description = "You can edit only your notes")]
         [SwaggerResponse(HttpStatusCode.NotFound, Type = typeof(Error), Description = "Not found")]
         public virtual HttpResponseMessage Put(Guid id, EditRecipeNote editRecipeNote)
         {
@@ -89,6 +96,9 @@ namespace FriGo.Api.Controllers
 
                 return Request.CreateResponse(HttpStatusCode.NotFound, notFoundError);
             }
+            if (recipeNote.UserId != new Guid(User.Identity.GetUserId()))
+                Request.CreateResponse(HttpStatusCode.Forbidden);
+
             AutoMapper.Map(editRecipeNote, recipeNote);
 
             recipeNoteService.Edit(recipeNote);
@@ -102,9 +112,14 @@ namespace FriGo.Api.Controllers
         /// <param name="id"></param>
         [SwaggerResponse(HttpStatusCode.NoContent, Description = "Note deleted")]
         [SwaggerResponse(HttpStatusCode.Unauthorized, Type = typeof(Error), Description = "Forbidden")]
+        [SwaggerResponse(HttpStatusCode.Forbidden, Type = typeof(Error), Description = "You can remove only your notes")]
         [SwaggerResponse(HttpStatusCode.NotFound, Type = typeof(Error), Description = "Not found")]
         public virtual HttpResponseMessage Delete(Guid id)
         {
+            RecipeNote recipeNote = recipeNoteService.Get(id);
+            if (recipeNote.UserId != new Guid(User.Identity.GetUserId()))
+                Request.CreateResponse(HttpStatusCode.Forbidden);
+
             recipeNoteService.Delete(id);
 
             return Request.CreateResponse(HttpStatusCode.NoContent);
