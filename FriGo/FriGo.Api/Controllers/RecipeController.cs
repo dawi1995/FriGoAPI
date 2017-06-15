@@ -14,6 +14,7 @@ using System.Linq;
 using FriGo.Db.Models.Ingredients;
 using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
+using WebGrease.Css.Extensions;
 
 namespace FriGo.Api.Controllers
 {
@@ -22,12 +23,16 @@ namespace FriGo.Api.Controllers
         private readonly IRecipeService recipeService;
         private readonly IUserService userService;
         private readonly IFitnessService fitnessService;
+        private readonly IRecipeNoteService recipeNoteService;
 
-        public RecipeController(IMapper autoMapper, IRecipeService recipeService, IFitnessService fitnessService, IUserService userService) : base(autoMapper)
+
+        public RecipeController(IMapper autoMapper, IRecipeService recipeService, IUserService userService,
+            IFitnessService fitnessService, IRecipeNoteService recipeNoteService) : base(autoMapper)
         {
             this.recipeService = recipeService;
-            this.fitnessService = fitnessService;
             this.userService = userService;
+            this.fitnessService = fitnessService;
+            this.recipeNoteService = recipeNoteService;
         }
 
         /// <summary>
@@ -42,6 +47,8 @@ namespace FriGo.Api.Controllers
             if (recipeResult != null)
             {
                 RecipeDto returnRecipe = AutoMapper.Map<Recipe, RecipeDto>(recipeResult);
+                returnRecipe.Notes = recipeNoteService.Get(id, new Guid(User.Identity.GetUserId()));
+
                 return Request.CreateResponse(HttpStatusCode.OK, returnRecipe);
             }
             else
@@ -74,15 +81,16 @@ namespace FriGo.Api.Controllers
                 fitnessService.EngineFitness.SortByFitness(fitness); //do implementacji sortowanie
 
                 IEnumerable<Recipe> recipeResults = recipeService.Engine.ProcessedRecipes
-                                                        .Skip((page - 1) * perPage).Take(perPage);
+                                                        .Skip((page - 1) * perPage).Take(perPage).ToList();
 
-                if (recipeResults.Count() > 0)
+                if (recipeResults.Any())
                 {
-                    IEnumerable<RecipeDto> returnRecipes = AutoMapper.Map<IEnumerable<Recipe>, IEnumerable<RecipeDto>>(recipeResults);
+                    IEnumerable<RecipeDto> returnRecipes = AutoMapper.Map<IEnumerable<Recipe>, IEnumerable<RecipeDto>>(recipeResults).ToList();
+                    returnRecipes.ForEach(recipe => recipe.Notes = recipeNoteService.Get(recipe.Id, new Guid(User.Identity.GetUserId())));
+
                     return Request.CreateResponse(HttpStatusCode.OK, returnRecipes);
                 }
-                else
-                    return Request.CreateResponse(HttpStatusCode.NoContent);
+                return Request.CreateResponse(HttpStatusCode.NoContent);
             }
             return Request.CreateResponse(HttpStatusCode.InternalServerError);
         }
