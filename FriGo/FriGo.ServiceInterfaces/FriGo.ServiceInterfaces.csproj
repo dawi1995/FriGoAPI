@@ -34,6 +34,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ICommentService.cs" />
+    <Compile Include="IFitnessSearchEngine.cs" />
+    <Compile Include="IFitnessService.cs" />
     <Compile Include="IRecipeService.cs" />
     <Compile Include="ISearchEngine.cs" />
     <Compile Include="IUnitService.cs" />

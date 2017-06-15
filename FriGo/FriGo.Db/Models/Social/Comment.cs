@@ -13,6 +13,7 @@ namespace FriGo.Db.Models.Social
 
         public string Text { get; set; }
         public DateTime CreatedAt { get; set; }
+        public Guid ImageId { get; set; }
 
         public virtual User User { get; set; }
         public virtual Recipe Recipe { get; set; }
