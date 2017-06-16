@@ -44,7 +44,7 @@ namespace FriGo.Services
                         ProcessedRecipes = descending ? ProcessedRecipes.OrderByDescending(key) : ProcessedRecipes.OrderBy(key);
                     }
                 }
-                ProcessedRecipes = ProcessedRecipes.OrderBy(x => x.Rating);
+                ProcessedRecipes = ProcessedRecipes.OrderBy(x => x.Rates);
             }
             catch (ArgumentException)
             {
