@@ -12,17 +12,27 @@ using FriGo.ServiceInterfaces;
 using Swashbuckle.Swagger.Annotations;
 using System.Linq;
 using FriGo.Db.Models.Ingredients;
+using Microsoft.AspNet.Identity;
+using System.Threading.Tasks;
+using WebGrease.Css.Extensions;
 
 namespace FriGo.Api.Controllers
 {
     public class RecipeController : BaseFriGoController
     {
         private readonly IRecipeService recipeService;
+        private readonly IUserService userService;
         private readonly IFitnessService fitnessService;
-        public RecipeController(IMapper autoMapper, IRecipeService recipeService, IFitnessService fitnessService) : base(autoMapper)
+        private readonly IRecipeNoteService recipeNoteService;
+
+
+        public RecipeController(IMapper autoMapper, IRecipeService recipeService, IUserService userService,
+            IFitnessService fitnessService, IRecipeNoteService recipeNoteService) : base(autoMapper)
         {
             this.recipeService = recipeService;
+            this.userService = userService;
             this.fitnessService = fitnessService;
+            this.recipeNoteService = recipeNoteService;
         }
 
         /// <summary>
@@ -37,6 +47,8 @@ namespace FriGo.Api.Controllers
             if (recipeResult != null)
             {
                 RecipeDto returnRecipe = AutoMapper.Map<Recipe, RecipeDto>(recipeResult);
+                returnRecipe.Notes = recipeNoteService.Get(id, new Guid(User.Identity.GetUserId()));
+
                 return Request.CreateResponse(HttpStatusCode.OK, returnRecipe);
             }
             else
@@ -67,19 +79,22 @@ namespace FriGo.Api.Controllers
                 recipeService.Engine.SortByField(sortField, descending);
                 fitnessService.EngineFitness.SortByFitness(fitness);
 
-
-
                 IEnumerable<KeyValuePair<Recipe, decimal>> recipeResults
                     = fitnessService.EngineFitness.ProcessedData
                     .Skip((page - 1) * perPage).Take(perPage);
 
-                if (recipeResults.Count() > 0)
+                if (recipeResults.Any())
                 {
                     IEnumerable<RecipeDto> returnRecipes = AutoMapper.Map<IEnumerable<KeyValuePair<Recipe, decimal>>, IEnumerable<RecipeDto>>(recipeResults);
+                    returnRecipes.ForEach(recipePair => recipePair.Key.Notes = recipeNoteService.Get(recipePair.Key.Id, new Guid(User.Identity.GetUserId())));
+
+               
+                    IEnumerable<Recipe> recipeResults = recipeService.Engine.ProcessedRecipes
+                                                        .Skip((page - 1) * perPage).Take(perPage).ToList();
+              
                     return Request.CreateResponse(HttpStatusCode.OK, returnRecipes);
                 }
-                else
-                    return Request.CreateResponse(HttpStatusCode.NoContent);
+                return Request.CreateResponse(HttpStatusCode.NoContent);
             }
             return Request.CreateResponse(HttpStatusCode.InternalServerError);
         }
@@ -101,9 +116,25 @@ namespace FriGo.Api.Controllers
         [SwaggerResponse(HttpStatusCode.Created, Type = typeof(RecipeDto), Description = "Recipe created")]
         [SwaggerResponse(HttpStatusCode.Unauthorized, Type = typeof(Error), Description = "Forbidden")]
         [Authorize]
-        public virtual HttpResponseMessage Post(Guid id, CreateRecipe createRecipe)
+        public virtual IHttpActionResult Post(Guid id, CreateRecipe createRecipe)
         {
-            throw new NotImplementedException();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            Recipe newRecipe = AutoMapper.Map<CreateRecipe,Recipe>(createRecipe);
+
+            var uid = User.Identity.GetUserId();
+            FriGo.Db.Models.Authentication.User user = userService.Get(uid);
+
+            if (user == null)
+                return Unauthorized();
+
+            newRecipe.User = user;
+            recipeService.Add(newRecipe);
+
+            return Created("",newRecipe);
         }
 
         /// <summary>
@@ -117,8 +148,62 @@ namespace FriGo.Api.Controllers
         [Authorize]
         public virtual HttpResponseMessage Delete(Guid id)
         {
-            throw new NotImplementedException();
+            var uid = User.Identity.GetUserId();
+            FriGo.Db.Models.Authentication.User user = userService.Get(uid);
+            Recipe recipe = recipeService.Get(id);
+
+            if(recipe == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+
+            if (recipe.User != user)
+                return Request.CreateResponse(HttpStatusCode.Unauthorized);
+
+            recipeService.Delete(id);
+            return Request.CreateResponse(HttpStatusCode.NoContent);
         }
+
+        private IHttpActionResult GetErrorResult(IdentityResult result)
+        {
+            if (result == null)
+            {
+                return InternalServerError();
+            }
+
+            if (result.Succeeded) return null;
+            if (result.Errors != null)
+            {
+                foreach (string error in result.Errors)
+                {
+                    ModelState.AddModelError("", error);
+                }
+            }
+
+            if (ModelState.IsValid)
+            {
+                // No ModelState errors are available to send, so just return an empty BadRequest.
+                return BadRequest();
+            }
+
+            return BadRequest(ModelState);
+        }
+        /* Upload file example
+         * 
+        public async Task<byte[]> UploadImage()
+        {
+            if (!Request.Content.IsMimeMultipartContent())
+                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+
+            var provider = new MultipartMemoryStreamProvider();
+            await Request.Content.ReadAsMultipartAsync(provider);
+
+            if (provider.Contents.Count == 0) return null;
+
+            var file = provider.Contents[0];
+            var filename = file.Headers.ContentDisposition.FileName.Trim('\"');
+            var buffer = await file.ReadAsByteArrayAsync();
+            return buffer;
+        }
+        */
     }
 
 }
