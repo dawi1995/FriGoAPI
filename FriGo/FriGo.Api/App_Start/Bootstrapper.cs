@@ -99,16 +99,9 @@ namespace FriGo.Api
             {
                 configuration.CreateMissingTypeMaps = true;
 
-                configuration.CreateMap<KeyValuePair<Recipe,decimal>,Recipe>()
-                .ForMember(dest => dest, opts => opts.MapFrom(src => src.Key));
+                configuration.CreateMap<KeyValuePair<Recipe, decimal>, Recipe>()
+                    .ConvertUsing(src => src.Key);
 
-                configuration.CreateMap<CreateComment, Comment>()
-                    .ForMember(comment => comment.Picture,
-                    opt => opt.MapFrom(commentDto => Convert.FromBase64String((commentDto.Base64Picture))));
-
-                configuration.CreateMap<Comment, CommentDto>()
-                .ForMember(commentDto => commentDto.Base64Picture,
-                opt => opt.MapFrom(comment => Convert.ToBase64String(comment.Picture)));
             });
             IMapper mapper = mapperConfiguration.CreateMapper();
 

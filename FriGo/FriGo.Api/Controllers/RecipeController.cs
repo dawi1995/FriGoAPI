@@ -86,12 +86,8 @@ namespace FriGo.Api.Controllers
                 if (recipeResults.Any())
                 {
                     IEnumerable<RecipeDto> returnRecipes = AutoMapper.Map<IEnumerable<KeyValuePair<Recipe, decimal>>, IEnumerable<RecipeDto>>(recipeResults);
-                    returnRecipes.ForEach(recipePair => recipePair.Key.Notes = recipeNoteService.Get(recipePair.Key.Id, new Guid(User.Identity.GetUserId())));
-
+                    returnRecipes.ForEach(recipePair => recipePair.Notes = recipeNoteService.Get(recipePair.Id, new Guid(User.Identity.GetUserId())));
                
-                    IEnumerable<Recipe> recipeResults = recipeService.Engine.ProcessedRecipes
-                                                        .Skip((page - 1) * perPage).Take(perPage).ToList();
-              
                     return Request.CreateResponse(HttpStatusCode.OK, returnRecipes);
                 }
                 return Request.CreateResponse(HttpStatusCode.NoContent);
