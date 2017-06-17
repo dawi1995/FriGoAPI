@@ -23,6 +23,8 @@ using FriGo.Db.DTO.Ingredients;
 using FriGo.Db.Models;
 using FriGo.Db.Models.Authentication;
 using FriGo.Db.Models.Ingredients;
+using FriGo.Db.ModelValidators.Interfaces;
+using FriGo.ServiceInterfaces;
 using Swashbuckle.Swagger.Annotations;
 
 namespace FriGo.Api.Controllers
@@ -31,16 +33,19 @@ namespace FriGo.Api.Controllers
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController 
     {
-        private const string LocalLoginProvider = "Local";
         private ApplicationUserManager userManager;
+        private readonly IValidatingService validatingService;
 
-        public AccountController()
-        {
-        }
+        private readonly IChangePasswordValidator changePasswordValidator;
+        private readonly IRegisterValidator registerValidator;
 
-        public AccountController(ApplicationUserManager userManager)
+
+        public AccountController(IValidatingService validatingService, IChangePasswordValidator changePasswordValidator,
+            IRegisterValidator registerValidator)
         {
-            UserManager = userManager;
+            this.validatingService = validatingService;
+            this.changePasswordValidator = changePasswordValidator;
+            this.registerValidator = registerValidator;
         }
 
         public ApplicationUserManager UserManager
@@ -78,17 +83,18 @@ namespace FriGo.Api.Controllers
         [SwaggerResponse(HttpStatusCode.Unauthorized, Type = typeof(Error), Description = "Forbidden")]
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("ChangePassword")]
-        public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
+        public HttpResponseMessage ChangePassword(ChangePasswordBindingModel model)
         {
-            if (!ModelState.IsValid)
+            if (!validatingService.IsValid(changePasswordValidator, model))
             {
-                return BadRequest(ModelState);
+                Error error = validatingService.GenerateError(changePasswordValidator, model);
+                return Request.CreateResponse(validatingService.GetStatusCode(), error);
             }
 
-            IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
-                model.NewPassword);
+            IdentityResult result = UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
+                model.NewPassword).Result;
 
-            return !result.Succeeded ? GetErrorResult(result) : Ok();
+            return !result.Succeeded ? GetErrorResult(result) : Request.CreateResponse(HttpStatusCode.OK);
         }
 
         /// <summary>
@@ -115,9 +121,10 @@ namespace FriGo.Api.Controllers
         [AllowAnonymous]
         public async Task<HttpResponseMessage> Register(RegisterBindingModel model)
         {
-            if (!ModelState.IsValid)
+            if (!validatingService.IsValid(registerValidator, model))
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+                Error error = validatingService.GenerateError(registerValidator, model);
+                return Request.CreateResponse(validatingService.GetStatusCode(), error);
             }
 
             var user = new User {UserName = model.Username, Email = model.Email};
@@ -140,11 +147,11 @@ namespace FriGo.Api.Controllers
             base.Dispose(disposing);
         }
 
-        private IHttpActionResult GetErrorResult(IdentityResult result)
+        private HttpResponseMessage GetErrorResult(IdentityResult result)
         {
             if (result == null)
             {
-                return InternalServerError();
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
 
             if (result.Succeeded) return null;
@@ -159,10 +166,10 @@ namespace FriGo.Api.Controllers
             if (ModelState.IsValid)
             {
                 // No ModelState errors are available to send, so just return an empty BadRequest.
-                return BadRequest();
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
-            return BadRequest(ModelState);
+            return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
         }
 
         private class ExternalLoginData

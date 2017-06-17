@@ -13,7 +13,8 @@ namespace FriGo.Api.Controllers
 {
     public class UserController : BaseFriGoController
     {
-        public UserController(IMapper autoMapper) : base(autoMapper)
+        public UserController(IMapper autoMapper, IValidatingService validatingService) : base(autoMapper,
+            validatingService)
         {
         }
 

@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentValidation, Version=6.4.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.6.4.1\lib\Net45\FluentValidation.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
@@ -43,6 +46,7 @@
     <Compile Include="ITagService.cs" />
     <Compile Include="IUnitService.cs" />
     <Compile Include="IUserService.cs" />
+    <Compile Include="IValidatingService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ICrudService.cs" />
     <Compile Include="IIngredientQuantityService.cs" />
@@ -50,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FriGo.Db\FriGo.Db.csproj">
