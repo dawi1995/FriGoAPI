@@ -1,9 +1,10 @@
 ﻿using FluentValidation;
 using FriGo.Db.Models.Authentication;
+using FriGo.Db.ModelValidators.Interfaces;
 
-namespace FriGo.Db.ModelValidators
+namespace FriGo.Db.ModelValidators.Validators
 {
-    public class ChangePasswordValidator : AbstractValidator<ChangePasswordBindingModel>
+    public class ChangePasswordValidator : AbstractValidator<ChangePasswordBindingModel>, IChangePasswordValidator
     {
         public ChangePasswordValidator()
         {
