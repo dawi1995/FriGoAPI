@@ -14,7 +14,6 @@ namespace FriGo.Api.Controllers
     {
         private readonly ITagService tagService;
 
-
         public TagController(IMapper autoMapper, IValidatingService validatingService, ITagService tagService) : base(
             autoMapper, validatingService)
         {
@@ -26,6 +25,7 @@ namespace FriGo.Api.Controllers
         /// </summary>
         /// <returns>An array of tags</returns>
         [SwaggerResponse(HttpStatusCode.OK, Type = typeof(IEnumerable<Tag>))]
+        [AllowAnonymous]
         public virtual HttpResponseMessage Get()
         {
             IEnumerable<Tag> tags = tagService.Get();
