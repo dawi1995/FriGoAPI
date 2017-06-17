@@ -115,6 +115,15 @@ namespace FriGo.Api.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rekord o podanym id nie istnieje..
+        /// </summary>
+        internal static string GenericNotFoundMessage {
+            get {
+                return ResourceManager.GetString("GenericNotFoundMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to grant_type.
         /// </summary>
         internal static string GrantTypeName {
@@ -133,11 +142,29 @@ namespace FriGo.Api.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ingredient was not found in our database..
+        ///   Looks up a localized string similar to Składnik nie znajduje się w naszej bazie..
         /// </summary>
         internal static string IngredientNotFoundMessage {
             get {
                 return ResourceManager.GetString("IngredientNotFoundMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nie możesz usunąć nie swojego składnika..
+        /// </summary>
+        internal static string IngredientQuantityDeleteForbiddenMessage {
+            get {
+                return ResourceManager.GetString("IngredientQuantityDeleteForbiddenMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nie możesz edytować nie swojej lodówki..
+        /// </summary>
+        internal static string IngredientQuantityPutForbiddenMessage {
+            get {
+                return ResourceManager.GetString("IngredientQuantityPutForbiddenMessage", resourceCulture);
             }
         }
         
