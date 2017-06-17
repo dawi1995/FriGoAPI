@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using FriGo.DAL;
+using FriGo.Db.DAL;
 using FriGo.Db.Models;
 using FriGo.Db.Models.Authentication;
 using FriGo.Db.Models.Ingredients;

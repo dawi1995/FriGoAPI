@@ -68,26 +68,26 @@ namespace FriGo.Api.Controllers
         /// <returns></returns>
 
         [SwaggerResponse(HttpStatusCode.OK, Type = typeof(RecipeDto))]
-        public virtual HttpResponseMessage Get(Tag[] tagQuery, int page = 1, int perPage = 10, string sortField = null, decimal fitness=0,
+        public virtual HttpResponseMessage Get(Tag[] tagQuery, int page = 1, int perPage = 10, string sortField = null, decimal fitness = 0,
             bool descending = false, string nameSearchQuery = null)
         {
-            //if (IsEmpty(tagQuery))
-            //    tagQuery = TakeAllTags().ToArray();
+
             if (recipeService.Engine.RawData != null)
             {
                 recipeService.Engine.FilterByName(nameSearchQuery);
                 recipeService.Engine.FilterByTag(tagQuery);
                 recipeService.Engine.SortByField(sortField, descending);
-                fitnessService.EngineFitness.SortByFitness(fitness); //do implementacji sortowanie
+                fitnessService.EngineFitness.SortByFitness(fitness);
 
-                IEnumerable<Recipe> recipeResults = recipeService.Engine.ProcessedRecipes
-                                                        .Skip((page - 1) * perPage).Take(perPage).ToList();
+                IEnumerable<KeyValuePair<Recipe, decimal>> recipeResults
+                    = fitnessService.EngineFitness.ProcessedData
+                    .Skip((page - 1) * perPage).Take(perPage);
 
                 if (recipeResults.Any())
                 {
-                    IEnumerable<RecipeDto> returnRecipes = AutoMapper.Map<IEnumerable<Recipe>, IEnumerable<RecipeDto>>(recipeResults).ToList();
-                    returnRecipes.ForEach(recipe => recipe.Notes = recipeNoteService.Get(recipe.Id, new Guid(User.Identity.GetUserId())));
-
+                    IEnumerable<RecipeDto> returnRecipes = AutoMapper.Map<IEnumerable<KeyValuePair<Recipe, decimal>>, IEnumerable<RecipeDto>>(recipeResults);
+                    returnRecipes.ForEach(recipePair => recipePair.Notes = recipeNoteService.Get(recipePair.Id, new Guid(User.Identity.GetUserId())));
+               
                     return Request.CreateResponse(HttpStatusCode.OK, returnRecipes);
                 }
                 return Request.CreateResponse(HttpStatusCode.NoContent);
@@ -97,10 +97,6 @@ namespace FriGo.Api.Controllers
         private bool IsEmpty(Tag[] tagQuery)
         {
             return tagQuery.Count() > 0;
-        }
-        private ICollection<Tag> TakeAllTags()
-        {
-            throw new NotImplementedException();
         }
         
 

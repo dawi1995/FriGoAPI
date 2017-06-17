@@ -8,7 +8,7 @@ using FriGo.Db.Models.Social;
 using FriGo.Db.Models.Ingredients;
 using FriGo.Interfaces.Dependencies;
 using FriGo.ServiceInterfaces;
-using FriGo.DAL;
+using FriGo.Db.DAL;
 using FriGo.Db.Models.Authentication;
 
 namespace FriGo.Services

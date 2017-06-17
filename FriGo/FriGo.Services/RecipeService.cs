@@ -1,7 +1,7 @@
 using FriGo.Db.Models;
 using FriGo.Db.Models.Recipes;
 using FriGo.Interfaces.Dependencies;
-using FriGo.DAL;
+using FriGo.Db.DAL;
 using FriGo.ServiceInterfaces;
 
 namespace FriGo.Services

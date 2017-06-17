@@ -9,32 +9,46 @@ namespace FriGo.Services
 {
     public class FitnessSearchEngine : IFitnessSearchEngine
     {
-        private IEnumerable<IngredientQuantity> quantities;
 
         public IEnumerable<IngredientQuantity> RawData { get; private set; }
         public IEnumerable<Recipe> RawRecipeData { get; private set; }
+        public IEnumerable<KeyValuePair<Recipe, decimal>> ProcessedData { get; private set; }
+        const decimal maxFitnessSufficient = 1;
 
         public FitnessSearchEngine(IEnumerable<IngredientQuantity> quantities)
         {
             RawData = quantities;
         }
 
+        public decimal CalculateFridgeFitness(IngredientQuantity quantities)
+        {
+            decimal fridgeQuantity = RawData
+                    .Where(x => x.Ingredient.Id == quantities.Ingredient.Id)
+                    .Sum(x => x.Quantity);
+            return fridgeQuantity;
+        }
 
-        public decimal CalculateUserFitness()
+        public decimal CheckForSufficiency(decimal fridgeQuantity, IngredientQuantity quantities)
         {
-            return RawData.Sum(x => x.Quantity);
+            return Math.Min(maxFitnessSufficient, fridgeQuantity / quantities.Quantity);
         }
-        public decimal CalculateRecipeFitness()
+        public decimal CalculateFitness(Recipe recipe)
         {
-            return RawRecipeData.Sum(x => x.IngredientQuantities.Sum(z => z.Quantity));
-        }
-        public decimal CalculateFitness()
-        {
-            return (CalculateUserFitness() / CalculateRecipeFitness()) * 100;
+            decimal fitness = recipe.IngredientQuantities
+            .Select(recipeIQ =>
+                CheckForSufficiency(CalculateFridgeFitness(recipeIQ), recipeIQ))
+                .Sum() / recipe.IngredientQuantities.Count;
+            return fitness;
         }
         public void SortByFitness(decimal fitness)
         {
-            //do implementacji
+            ProcessedData = RawRecipeData
+                .Select(recipe =>
+                {
+                    return new KeyValuePair<Recipe, decimal>(recipe, CalculateFitness(recipe));
+                })
+                .OrderBy(keyValue => keyValue.Value)
+                .Where(keyValue => keyValue.Value <= fitness);
         }
     }
 }

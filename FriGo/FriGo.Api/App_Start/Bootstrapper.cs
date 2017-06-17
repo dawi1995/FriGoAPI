@@ -6,12 +6,12 @@ using System.Web.Http;
 using Autofac;
 using Autofac.Integration.WebApi;
 using AutoMapper;
-using FriGo.DAL;
 using FriGo.Db.Models;
 using FriGo.Interfaces.Dependencies;
 using FriGo.Services;
 using FriGo.Db.Models.Social;
 using FriGo.Db.DTO.Social;
+using FriGo.Db.Models.Recipes;
 
 namespace FriGo.Api
 {
@@ -97,6 +97,9 @@ namespace FriGo.Api
             var mapperConfiguration = new MapperConfiguration(configuration =>
             {
                 configuration.CreateMissingTypeMaps = true;
+
+                configuration.CreateMap<KeyValuePair<Recipe, decimal>, Recipe>()
+                    .ConvertUsing(src => src.Key);
 
             });
             IMapper mapper = mapperConfiguration.CreateMapper();
