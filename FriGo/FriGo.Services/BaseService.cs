@@ -1,4 +1,4 @@
-﻿using FriGo.DAL;
+﻿using FriGo.Db.DAL;
 
 namespace FriGo.Services
 {

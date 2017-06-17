@@ -64,6 +64,10 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAL\GenericRepository.cs" />
+    <Compile Include="DAL\IGenericRepository.cs" />
+    <Compile Include="DAL\IUnitOfWork.cs" />
+    <Compile Include="DAL\UnitOfWork.cs" />
     <Compile Include="DTO\Account\EditAccount.cs" />
     <Compile Include="DTO\IngredientQuantities\CreateIngredientQuantity.cs" />
     <Compile Include="DTO\IngredientQuantities\EditIngredientQuantity.cs" />
@@ -106,6 +110,7 @@
     <Compile Include="Models\Ingredients\Unit.cs" />
     <Compile Include="Models\Recipes\Recipe.cs" />
     <Compile Include="Models\Recipes\Tag.cs" />
+    <Compile Include="ModelValidators\AbstractDatabaseValidator.cs" />
     <Compile Include="ModelValidators\RecipeValidator.cs" />
     <Compile Include="ModelValidators\RegisterValidator.cs" />
     <Compile Include="ModelValidators\IngredientQuantityValidator.cs" />

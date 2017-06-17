@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using FriGo.DAL;
+using FriGo.Db.DAL;
 using FriGo.Interfaces.Dependencies;
 
 namespace FriGo.Services
