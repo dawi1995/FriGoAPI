@@ -112,7 +112,7 @@ namespace FriGo.Api.Controllers
         [SwaggerResponse(HttpStatusCode.Created, Type = typeof(RecipeDto), Description = "Recipe created")]
         [SwaggerResponse(HttpStatusCode.Unauthorized, Type = typeof(Error), Description = "Forbidden")]
         [Authorize]
-        public virtual IHttpActionResult Post(Guid id, CreateRecipe createRecipe)
+        public virtual IHttpActionResult Post(CreateRecipe createRecipe)
         {
             if (!ModelState.IsValid)
             {
