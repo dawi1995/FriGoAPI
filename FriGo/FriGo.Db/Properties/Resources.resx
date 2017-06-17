@@ -118,7 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ConfirmPasswordValidationMessage" xml:space="preserve">
-    <value>The new password and confirmation password do not match.</value>
+    <value>Wartości w polach nowe hasło oraz potwierdzenie nowego hasła są różne.</value>
+  </data>
+  <data name="EmailExistsValidationMessage" xml:space="preserve">
+    <value>Podany adres email jest już zajęty.</value>
+  </data>
+  <data name="EmailRegexValidationMessage" xml:space="preserve">
+    <value>Podany adres email nie przechodzi walidacji wyrażeniem regularnym.</value>
   </data>
   <data name="EmptyGenericValidationMessage" xml:space="preserve">
     <value>Pole {0} nie może być puste.</value>
@@ -143,9 +149,12 @@
     <value>Jednostka o podanym Id nie istnieje.</value>
   </data>
   <data name="PasswordLengthValidationMessage" xml:space="preserve">
-    <value>The password must be at least {0} characters long.</value>
+    <value>Hasło musi składać się z minimum {0} znaków.</value>
   </data>
   <data name="UnitList" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SeedLists\UnitList.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="UsernameExistsValidationMessage" xml:space="preserve">
+    <value>Użytkownik o podanej nazwie już istnieje.</value>
   </data>
 </root>

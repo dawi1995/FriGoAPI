@@ -11,8 +11,6 @@ namespace FriGo.Db.ModelValidators.Validators
     {
         public InputIngredientValidator(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            CascadeMode = CascadeMode.StopOnFirstFailure;
-
             RuleFor(createIngredient => createIngredient.Name)
                 .NotEmpty()
                 .WithMessage(Properties.Resources.IngredientNameEmptyValidationMessage)

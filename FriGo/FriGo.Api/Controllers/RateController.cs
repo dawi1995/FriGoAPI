@@ -13,7 +13,8 @@ namespace FriGo.Api.Controllers
 {
     public class RateController : BaseFriGoController
     {
-        public RateController(IMapper autoMapper) : base(autoMapper)
+        public RateController(IMapper autoMapper, IValidatingService validatingService) : base(autoMapper,
+            validatingService)
         {
         }
 

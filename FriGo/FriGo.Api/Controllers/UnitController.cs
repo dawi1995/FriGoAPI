@@ -15,7 +15,9 @@ namespace FriGo.Api.Controllers
     public class UnitController : BaseFriGoController
     {
         private readonly IUnitService unitService;
-        public UnitController(IMapper autoMapper,IUnitService unitService) : base(autoMapper)
+
+        public UnitController(IMapper autoMapper, IValidatingService validatingService,
+            IUnitService unitService) : base(autoMapper, validatingService)
         {
             this.unitService = unitService;
         }

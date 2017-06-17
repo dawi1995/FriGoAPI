@@ -9,7 +9,6 @@ using FriGo.Db.ModelValidators;
 
 namespace FriGo.Db.Models.Authentication
 {
-    [Validator(typeof(ChangePasswordValidator))]
     public class ChangePasswordBindingModel
     {
         public string OldPassword { get; set; }

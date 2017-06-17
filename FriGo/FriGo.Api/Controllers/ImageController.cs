@@ -10,13 +10,14 @@ using FriGo.Db.Models;
 using FriGo.Db.Models.Social;
 using Swashbuckle.Swagger.Annotations;
 using FriGo.Db.Models.Recipes;
+using FriGo.ServiceInterfaces;
 using Microsoft.AspNet.Identity;
 
 namespace FriGo.Api.Controllers
 {
     public class ImageController : BaseFriGoController
     {
-        public ImageController(IMapper autoMapper) : base(autoMapper)
+        public ImageController(IMapper autoMapper, IValidatingService validatingService) : base(autoMapper, validatingService)
         {
         }
 

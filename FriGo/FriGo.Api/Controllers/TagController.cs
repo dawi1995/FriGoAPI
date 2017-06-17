@@ -14,7 +14,9 @@ namespace FriGo.Api.Controllers
     {
         private readonly ITagService tagService;
 
-        public TagController(IMapper autoMapper, ITagService tagService) : base(autoMapper)
+
+        public TagController(IMapper autoMapper, IValidatingService validatingService, ITagService tagService) : base(
+            autoMapper, validatingService)
         {
             this.tagService = tagService;
         }

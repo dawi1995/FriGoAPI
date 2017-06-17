@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using AutoMapper;
+using FriGo.ServiceInterfaces;
 using Swashbuckle.Swagger.Annotations;
 
 namespace FriGo.Api.Controllers
@@ -14,10 +15,12 @@ namespace FriGo.Api.Controllers
     public abstract class BaseFriGoController : ApiController
     {
         protected readonly IMapper AutoMapper;
+        protected readonly IValidatingService ValidatingService;
 
-        protected BaseFriGoController(IMapper autoMapper)
+        protected BaseFriGoController(IMapper autoMapper, IValidatingService validatingService)
         {
-            this.AutoMapper = autoMapper;
+            AutoMapper = autoMapper;
+            ValidatingService = validatingService;
         }
     }
 }
