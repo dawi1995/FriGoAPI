@@ -109,7 +109,7 @@
     <Compile Include="ModelValidators\RecipeValidator.cs" />
     <Compile Include="ModelValidators\RegisterValidator.cs" />
     <Compile Include="ModelValidators\IngredientQuantityValidator.cs" />
-    <Compile Include="ModelValidators\IngredientValidator.cs" />
+    <Compile Include="ModelValidators\CreateIngredientValidator.cs" />
     <Compile Include="ModelValidators\ChangePasswordValidator.cs" />
     <Compile Include="ModelValidators\SetPasswordValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

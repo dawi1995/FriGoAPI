@@ -70,6 +70,15 @@ namespace FriGo.Db.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pole {0} nie może być puste..
+        /// </summary>
+        internal static string EmptyGenericValidationMessage {
+            get {
+                return ResourceManager.GetString("EmptyGenericValidationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Jajko
         ///Ryż.
         /// </summary>
@@ -80,11 +89,20 @@ namespace FriGo.Db.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nazwa składnika nie może przekraczać 100 znaków..
+        ///   Looks up a localized string similar to Nazwa składnika nie może być pusta..
         /// </summary>
-        internal static string IngredientNameValidationMessage {
+        internal static string IngredientNameEmptyValidationMessage {
             get {
-                return ResourceManager.GetString("IngredientNameValidationMessage", resourceCulture);
+                return ResourceManager.GetString("IngredientNameEmptyValidationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nazwa składnika musi mieścić się w granicach 1-100 znaków..
+        /// </summary>
+        internal static string IngredientNameLengthValidationMessage {
+            get {
+                return ResourceManager.GetString("IngredientNameLengthValidationMessage", resourceCulture);
             }
         }
         
