@@ -7,9 +7,9 @@ using FriGo.Interfaces.Dependencies;
 
 namespace FriGo.Db.ModelValidators.Validators
 {
-    public class CreateIngredientValidator : AbstractDatabaseValidator<CreateIngredient>, ICreateIngredientValidator, IRequestDependency
+    public class InputIngredientValidator : AbstractDatabaseValidator<InputIngredient>, IInputIngredientValidator, IRequestDependency
     {
-        public CreateIngredientValidator(IUnitOfWork unitOfWork) : base(unitOfWork)
+        public InputIngredientValidator(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
             CascadeMode = CascadeMode.StopOnFirstFailure;
 

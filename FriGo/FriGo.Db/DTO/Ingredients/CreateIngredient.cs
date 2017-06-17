@@ -3,9 +3,7 @@ using FriGo.Db.ModelValidators;
 
 namespace FriGo.Db.DTO.Ingredients
 {
-    public class CreateIngredient
+    public class CreateIngredient : InputIngredient
     {
-        public Guid UnitId { get; set; }
-        public string Name { get; set; }
     }
 }

@@ -72,6 +72,7 @@
     <Compile Include="DTO\IngredientQuantities\CreateIngredientQuantity.cs" />
     <Compile Include="DTO\IngredientQuantities\EditIngredientQuantity.cs" />
     <Compile Include="DTO\Ingredients\IngredientDto.cs" />
+    <Compile Include="DTO\Ingredients\InputIngredient.cs" />
     <Compile Include="DTO\Recipes\CreateRecipe.cs" />
     <Compile Include="DTO\Recipes\RateRecipe.cs" />
     <Compile Include="DTO\Recipes\RecipeDto.cs" />
@@ -111,12 +112,12 @@
     <Compile Include="Models\Recipes\Recipe.cs" />
     <Compile Include="Models\Recipes\Tag.cs" />
     <Compile Include="ModelValidators\Interfaces\IAbstractDatabaseValidator.cs" />
-    <Compile Include="ModelValidators\Interfaces\ICreateIngredientValidator.cs" />
+    <Compile Include="ModelValidators\Interfaces\IInputIngredientValidator.cs" />
     <Compile Include="ModelValidators\Validators\AbstractDatabaseValidator.cs" />
     <Compile Include="ModelValidators\RecipeValidator.cs" />
     <Compile Include="ModelValidators\RegisterValidator.cs" />
     <Compile Include="ModelValidators\IngredientQuantityValidator.cs" />
-    <Compile Include="ModelValidators\Validators\CreateIngredientValidator.cs" />
+    <Compile Include="ModelValidators\Validators\InputIngredientValidator.cs" />
     <Compile Include="ModelValidators\ChangePasswordValidator.cs" />
     <Compile Include="ModelValidators\SetPasswordValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
