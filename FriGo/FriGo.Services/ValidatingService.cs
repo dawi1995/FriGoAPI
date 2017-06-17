@@ -10,14 +10,14 @@ namespace FriGo.Services
 {
     public class ValidatingService : IValidatingService, IRequestDependency
     {
-        public bool IsValid<T>(AbstractValidator<T> validator,T entity)
+        public bool IsValid<T>(IValidator validator,T entity)
         {
             ValidationResult result = UseValidator(validator, entity);
 
             return result.IsValid;
         }
 
-        public Error GenerateError<T>(AbstractValidator<T> validator, T entity)
+        public Error GenerateError<T>(IValidator validator, T entity)
         {
             var stringBuilder = new StringBuilder();
             ValidationResult result = UseValidator(validator, entity);
@@ -32,7 +32,12 @@ namespace FriGo.Services
             };
         }
 
-        private ValidationResult UseValidator<T>(IValidator<T> validator, T entity)
+        public HttpStatusCode GetStatusCode()
+        {
+            return HttpStatusCode.BadRequest;
+        }
+
+        private ValidationResult UseValidator<T>(IValidator validator, T entity)
         {
             return validator?.Validate(entity);
         }
