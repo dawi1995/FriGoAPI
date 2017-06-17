@@ -41,7 +41,9 @@ namespace FriGo.Api.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, Type = typeof(Error), Description = "Not found")]
         public HttpResponseMessage Get()
         {
-            return Request.CreateResponse(HttpStatusCode.OK, ingredientQuantityService.Get());
+            string userId = User.Identity.GetUserId();
+
+            return Request.CreateResponse(HttpStatusCode.OK, ingredientQuantityService.GetByUserId(userId));
         }
 
         /// <summary>
@@ -54,7 +56,9 @@ namespace FriGo.Api.Controllers
         [Authorize]
         public HttpResponseMessage Get(Guid id)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, ingredientQuantityService.Get(id));
+            string userId = User.Identity.GetUserId();
+
+            return Request.CreateResponse(HttpStatusCode.OK, ingredientQuantityService.Get(userId, id));
         }
 
         /// <summary>
