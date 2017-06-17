@@ -61,11 +61,29 @@ namespace FriGo.Db.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The new password and confirmation password do not match..
+        ///   Looks up a localized string similar to Wartości w polach nowe hasło oraz potwierdzenie nowego hasła są różne..
         /// </summary>
         internal static string ConfirmPasswordValidationMessage {
             get {
                 return ResourceManager.GetString("ConfirmPasswordValidationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Podany adres email jest już zajęty..
+        /// </summary>
+        internal static string EmailExistsValidationMessage {
+            get {
+                return ResourceManager.GetString("EmailExistsValidationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Podany adres email nie przechodzi walidacji wyrażeniem regularnym..
+        /// </summary>
+        internal static string EmailRegexValidationMessage {
+            get {
+                return ResourceManager.GetString("EmailRegexValidationMessage", resourceCulture);
             }
         }
         
@@ -134,7 +152,7 @@ namespace FriGo.Db.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The password must be at least {0} characters long..
+        ///   Looks up a localized string similar to Hasło musi składać się z minimum {0} znaków..
         /// </summary>
         internal static string PasswordLengthValidationMessage {
             get {
@@ -149,6 +167,15 @@ namespace FriGo.Db.Properties {
         internal static string UnitList {
             get {
                 return ResourceManager.GetString("UnitList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Użytkownik o podanej nazwie już istnieje..
+        /// </summary>
+        internal static string UsernameExistsValidationMessage {
+            get {
+                return ResourceManager.GetString("UsernameExistsValidationMessage", resourceCulture);
             }
         }
     }

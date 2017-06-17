@@ -1,9 +1,9 @@
 ﻿using FluentValidation.Attributes;
 using FriGo.Db.ModelValidators;
+using FriGo.Db.ModelValidators.Validators;
 
 namespace FriGo.Db.Models.Authentication
 {
-    [Validator(typeof(RegisterValidator))]
     public class RegisterBindingModel
     {
         public string Email { get; set; }

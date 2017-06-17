@@ -37,11 +37,15 @@ namespace FriGo.Api.Controllers
         private readonly IValidatingService validatingService;
 
         private readonly IChangePasswordValidator changePasswordValidator;
+        private readonly IRegisterValidator registerValidator;
 
-        public AccountController(IValidatingService validatingService, IChangePasswordValidator changePasswordValidator)
+
+        public AccountController(IValidatingService validatingService, IChangePasswordValidator changePasswordValidator,
+            IRegisterValidator registerValidator)
         {
             this.validatingService = validatingService;
             this.changePasswordValidator = changePasswordValidator;
+            this.registerValidator = registerValidator;
         }
 
         public ApplicationUserManager UserManager
@@ -117,9 +121,10 @@ namespace FriGo.Api.Controllers
         [AllowAnonymous]
         public async Task<HttpResponseMessage> Register(RegisterBindingModel model)
         {
-            if (!ModelState.IsValid)
+            if (!validatingService.IsValid(registerValidator, model))
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+                Error error = validatingService.GenerateError(registerValidator, model);
+                return Request.CreateResponse(validatingService.GetStatusCode(), error);
             }
 
             var user = new User {UserName = model.Username, Email = model.Email};
