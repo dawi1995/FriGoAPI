@@ -7,6 +7,7 @@ using System.Web.Http;
 using AutoMapper;
 using FriGo.Db.DTO.IngredientQuantities;
 using FriGo.Db.Models;
+using FriGo.Db.Models.Authentication;
 using FriGo.Db.Models.Ingredients;
 using FriGo.ServiceInterfaces;
 using Swashbuckle.Swagger.Annotations;
@@ -35,7 +36,6 @@ namespace FriGo.Api.Controllers
         /// Returns user's ingredients with quantities
         /// </summary>
         /// <returns>An array of all ingredients with quantities</returns>
-        [Authorize]
         [SwaggerResponse(HttpStatusCode.OK, Type = typeof(IEnumerable<IngredientQuantity>), Description = "Returns ingredients in user\'s fridge")]
         [SwaggerResponse(HttpStatusCode.Unauthorized, Type = typeof(Error), Description = "Forbidden")]
         [SwaggerResponse(HttpStatusCode.NotFound, Type = typeof(Error), Description = "Not found")]
@@ -53,7 +53,6 @@ namespace FriGo.Api.Controllers
         [SwaggerResponse(HttpStatusCode.OK, Type = typeof(IngredientQuantity), Description = "Return an ingredient in user's fridge with specified id")]
         [SwaggerResponse(HttpStatusCode.Unauthorized, Type = typeof(Error), Description = "Forbidden")]
         [SwaggerResponse(HttpStatusCode.NotFound, Type = typeof(Error), Description = "Not found")]
-        [Authorize]
         public HttpResponseMessage Get(Guid id)
         {
             string userId = User.Identity.GetUserId();
@@ -68,11 +67,10 @@ namespace FriGo.Api.Controllers
         /// <returns>Created ingredient with quantity</returns>
         [SwaggerResponse(HttpStatusCode.Created, Type = typeof(IngredientQuantity), Description = "Ingredient quantity created")]
         [SwaggerResponse(HttpStatusCode.Unauthorized, Type = typeof(Error), Description = "Forbidden")]
-        [Authorize]
         public HttpResponseMessage Post(CreateIngredientQuantity createIngredientQuantity)
         {
-            var id = User.Identity.GetUserId();
-            FriGo.Db.Models.Authentication.User user =  userService.Get(id);
+            string userId = User.Identity.GetUserId();
+            User user =  userService.Get(userId);
 
             Ingredient ingredient = ingredientService.Get(createIngredientQuantity.IngredientId);
 
@@ -94,13 +92,20 @@ namespace FriGo.Api.Controllers
         [SwaggerResponse(HttpStatusCode.OK, Type = typeof(IngredientQuantity), Description = "Ingredient quantity updated")]
         [SwaggerResponse(HttpStatusCode.Unauthorized, Type = typeof(Error), Description = "Forbidden")]
         [SwaggerResponse(HttpStatusCode.NotFound, Type = typeof(Error), Description = "Not found")]
-        [Authorize]
         public HttpResponseMessage Put(Guid id, EditIngredientQuantity editIngredientQuantity)
         {
             IngredientQuantity ingredientQuantity = ingredientQuantityService.Get(id);
-            ingredientQuantity.Description = editIngredientQuantity.Description;
-            ingredientQuantity.Quantity = editIngredientQuantity.Quantity;
-            //ingredientQuantity = AutoMapper.Map<EditIngredientQuantity, IngredientQuantity>(editIngredientQuantity);
+            if (ingredientQuantity == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound,
+                    new Error(HttpStatusCode.NotFound, Properties.Resources.GenericNotFoundMessage));
+
+            string userId = User.Identity.GetUserId();
+            if (!ingredientQuantityService.IsOwnedByUser(userId, id))
+                return Request.CreateResponse(HttpStatusCode.Forbidden,
+                    new Error(HttpStatusCode.Forbidden,
+                        Properties.Resources.IngredientQuantityPutForbiddenMessage));
+
+            AutoMapper.Map(editIngredientQuantity, ingredientQuantity);
 
             ingredientQuantityService.Edit(ingredientQuantity);
 
@@ -115,11 +120,20 @@ namespace FriGo.Api.Controllers
         [SwaggerResponse(HttpStatusCode.NoContent, Description = "Ingredient quantity deleted")]
         [SwaggerResponse(HttpStatusCode.Unauthorized, Type = typeof(Error), Description = "Forbidden")]
         [SwaggerResponse(HttpStatusCode.NotFound, Type = typeof(Error), Description = "Not found")]
-        [Authorize]
         public HttpResponseMessage Delete(Guid id)
         {
-            ingredientQuantityService.Delete(id);
+            IngredientQuantity ingredientQuantity = ingredientQuantityService.Get(id);
+            if (ingredientQuantity == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound,
+                    new Error(HttpStatusCode.NotFound, Properties.Resources.GenericNotFoundMessage));
 
+            string userId = User.Identity.GetUserId();
+            if (!ingredientQuantityService.IsOwnedByUser(userId, id))
+                return Request.CreateResponse(HttpStatusCode.Forbidden,
+                    new Error(HttpStatusCode.Forbidden,
+                        Properties.Resources.IngredientQuantityDeleteForbiddenMessage));
+
+            ingredientQuantityService.Delete(id);
             return Request.CreateResponse(HttpStatusCode.NoContent);
         }
     }

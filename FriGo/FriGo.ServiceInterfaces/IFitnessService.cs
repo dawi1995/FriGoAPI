@@ -5,7 +5,7 @@ using FriGo.Db.Models.Ingredients;
 
 namespace FriGo.ServiceInterfaces
 {
-    public interface IFitnessService:IIngredientQuantityService
+    public interface IFitnessService
     {
         IFitnessSearchEngine EngineFitness { get; set; }
     }

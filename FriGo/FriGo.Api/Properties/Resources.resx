@@ -135,6 +135,9 @@
   <data name="FormDataParameterTypeName" xml:space="preserve">
     <value>formData</value>
   </data>
+  <data name="GenericNotFoundMessage" xml:space="preserve">
+    <value>Rekord o podanym id nie istnieje.</value>
+  </data>
   <data name="GrantTypeName" xml:space="preserve">
     <value>grant_type</value>
   </data>
@@ -142,7 +145,13 @@
     <value>preferably grant_type=password</value>
   </data>
   <data name="IngredientNotFoundMessage" xml:space="preserve">
-    <value>Ingredient was not found in our database.</value>
+    <value>Składnik nie znajduje się w naszej bazie.</value>
+  </data>
+  <data name="IngredientQuantityDeleteForbiddenMessage" xml:space="preserve">
+    <value>Nie możesz usunąć nie swojego składnika.</value>
+  </data>
+  <data name="IngredientQuantityPutForbiddenMessage" xml:space="preserve">
+    <value>Nie możesz edytować nie swojej lodówki.</value>
   </data>
   <data name="InvalidRequestString" xml:space="preserve">
     <value>Provided request was invalid</value>
