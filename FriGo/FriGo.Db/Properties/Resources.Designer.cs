@@ -107,11 +107,29 @@ namespace FriGo.Db.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mamy już składnik o takiej nazwie..
+        /// </summary>
+        internal static string IngredientNameUniqueValidationMessage {
+            get {
+                return ResourceManager.GetString("IngredientNameUniqueValidationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ilość musi być liczbą dodatnią..
         /// </summary>
         internal static string IngredientQuantityValidationMessage {
             get {
                 return ResourceManager.GetString("IngredientQuantityValidationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jednostka o podanym Id nie istnieje..
+        /// </summary>
+        internal static string IngredientUnitExistMessage {
+            get {
+                return ResourceManager.GetString("IngredientUnitExistMessage", resourceCulture);
             }
         }
         

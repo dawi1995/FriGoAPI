@@ -110,11 +110,13 @@
     <Compile Include="Models\Ingredients\Unit.cs" />
     <Compile Include="Models\Recipes\Recipe.cs" />
     <Compile Include="Models\Recipes\Tag.cs" />
-    <Compile Include="ModelValidators\AbstractDatabaseValidator.cs" />
+    <Compile Include="ModelValidators\Interfaces\IAbstractDatabaseValidator.cs" />
+    <Compile Include="ModelValidators\Interfaces\ICreateIngredientValidator.cs" />
+    <Compile Include="ModelValidators\Validators\AbstractDatabaseValidator.cs" />
     <Compile Include="ModelValidators\RecipeValidator.cs" />
     <Compile Include="ModelValidators\RegisterValidator.cs" />
     <Compile Include="ModelValidators\IngredientQuantityValidator.cs" />
-    <Compile Include="ModelValidators\CreateIngredientValidator.cs" />
+    <Compile Include="ModelValidators\Validators\CreateIngredientValidator.cs" />
     <Compile Include="ModelValidators\ChangePasswordValidator.cs" />
     <Compile Include="ModelValidators\SetPasswordValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -144,6 +146,7 @@
     <Content Include="SeedLists\UnitList.txt" />
     <Content Include="SeedLists\IngredientList.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

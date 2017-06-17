@@ -133,8 +133,14 @@
   <data name="IngredientNameLengthValidationMessage" xml:space="preserve">
     <value>Nazwa składnika musi mieścić się w granicach 1-100 znaków.</value>
   </data>
+  <data name="IngredientNameUniqueValidationMessage" xml:space="preserve">
+    <value>Mamy już składnik o takiej nazwie.</value>
+  </data>
   <data name="IngredientQuantityValidationMessage" xml:space="preserve">
     <value>Ilość musi być liczbą dodatnią.</value>
+  </data>
+  <data name="IngredientUnitExistMessage" xml:space="preserve">
+    <value>Jednostka o podanym Id nie istnieje.</value>
   </data>
   <data name="PasswordLengthValidationMessage" xml:space="preserve">
     <value>The password must be at least {0} characters long.</value>
