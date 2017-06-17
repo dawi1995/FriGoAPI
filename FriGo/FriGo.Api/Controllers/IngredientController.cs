@@ -7,6 +7,7 @@ using AutoMapper;
 using FriGo.Db.DTO.Ingredients;
 using FriGo.Db.Models;
 using FriGo.Db.Models.Ingredients;
+using FriGo.Db.ModelValidators.Interfaces;
 using FriGo.ServiceInterfaces;
 using Swashbuckle.Swagger.Annotations;
 
@@ -16,12 +17,16 @@ namespace FriGo.Api.Controllers
     {
         private readonly IIngredientService ingredientService;
         private readonly IUnitService unitService;
+        private readonly IInputIngredientValidator ingredientValidator;
+
 
         public IngredientController(IMapper autoMapper, IValidatingService validatingService,
-            IIngredientService ingredientService, IUnitService unitService) : base(autoMapper, validatingService)
+            IIngredientService ingredientService, IUnitService unitService,
+            IInputIngredientValidator ingredientValidator) : base(autoMapper, validatingService)
         {
             this.ingredientService = ingredientService;
             this.unitService = unitService;
+            this.ingredientValidator = ingredientValidator;
         }
 
         /// <summary>
@@ -61,6 +66,12 @@ namespace FriGo.Api.Controllers
         [SwaggerResponse(HttpStatusCode.Unauthorized, Type = typeof(Error), Description = "Forbidden")]
         public virtual HttpResponseMessage Post(CreateIngredient createIngredient)
         {
+            if (!ValidatingService.IsValid(ingredientValidator, createIngredient))
+            {
+                Error error = ValidatingService.GenerateError(ingredientValidator, createIngredient);
+                return Request.CreateResponse(ValidatingService.GetStatusCode(), error);
+            }
+
             Ingredient ingredient = AutoMapper.Map<CreateIngredient, Ingredient>(createIngredient);
             ingredientService.Add(ingredient);
 
@@ -82,6 +93,12 @@ namespace FriGo.Api.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, Type = typeof(Error), Description = "Not found")]
         public virtual HttpResponseMessage Put(Guid id, EditIngredient editIngredient)
         {
+            if (!ValidatingService.IsValid(ingredientValidator, editIngredient))
+            {
+                Error error = ValidatingService.GenerateError(ingredientValidator, editIngredient);
+                return Request.CreateResponse(ValidatingService.GetStatusCode(), error);
+            }
+
             Ingredient ingredient = ingredientService.Get(id);
 
             if (ingredient == null)
