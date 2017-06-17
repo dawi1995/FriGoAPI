@@ -17,8 +17,8 @@ namespace FriGo.Api.Controllers
         private readonly IIngredientService ingredientService;
         private readonly IUnitService unitService;
 
-        public IngredientController(IMapper autoMapper, IIngredientService ingredientService, IUnitService unitService)
-            : base(autoMapper)
+        public IngredientController(IMapper autoMapper, IValidatingService validatingService,
+            IIngredientService ingredientService, IUnitService unitService) : base(autoMapper, validatingService)
         {
             this.ingredientService = ingredientService;
             this.unitService = unitService;

@@ -26,8 +26,9 @@ namespace FriGo.Api.Controllers
         private readonly IRecipeNoteService recipeNoteService;
 
 
-        public RecipeController(IMapper autoMapper, IRecipeService recipeService, IUserService userService,
-            IFitnessService fitnessService, IRecipeNoteService recipeNoteService) : base(autoMapper)
+        public RecipeController(IMapper autoMapper, IValidatingService validatingService, IRecipeService recipeService,
+            IUserService userService, IFitnessService fitnessService, IRecipeNoteService recipeNoteService) : base(
+            autoMapper, validatingService)
         {
             this.recipeService = recipeService;
             this.userService = userService;

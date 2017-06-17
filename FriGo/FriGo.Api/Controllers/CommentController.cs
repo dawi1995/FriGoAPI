@@ -18,11 +18,12 @@ namespace FriGo.Api.Controllers
     {
         private readonly ICommentService commentService;
         private readonly IRecipeService recipeService;
-        public CommentController(IMapper autoMapper, ICommentService commentService, IRecipeService recipeService) : base(autoMapper)
+
+        public CommentController(IMapper autoMapper, IValidatingService validatingService,
+            ICommentService commentService, IRecipeService recipeService) : base(autoMapper, validatingService)
         {
             this.commentService = commentService;
             this.recipeService = recipeService;
-            
         }
 
         /// <summary>
