@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FriGo.DAL;
+using FriGo.Db.DAL;
 using FriGo.Db.Models;
 using FriGo.Db.Models.Social;
 using FriGo.Interfaces.Dependencies;

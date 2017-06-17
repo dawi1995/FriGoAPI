@@ -1,4 +1,4 @@
-﻿using FriGo.DAL;
+﻿using FriGo.Db.DAL;
 using FriGo.Db.Models.Ingredients;
 using FriGo.Interfaces.Dependencies;
 using FriGo.ServiceInterfaces;

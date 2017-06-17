@@ -64,10 +64,15 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAL\GenericRepository.cs" />
+    <Compile Include="DAL\IGenericRepository.cs" />
+    <Compile Include="DAL\IUnitOfWork.cs" />
+    <Compile Include="DAL\UnitOfWork.cs" />
     <Compile Include="DTO\Account\EditAccount.cs" />
     <Compile Include="DTO\IngredientQuantities\CreateIngredientQuantity.cs" />
     <Compile Include="DTO\IngredientQuantities\EditIngredientQuantity.cs" />
     <Compile Include="DTO\Ingredients\IngredientDto.cs" />
+    <Compile Include="DTO\Ingredients\InputIngredient.cs" />
     <Compile Include="DTO\Recipes\CreateRecipe.cs" />
     <Compile Include="DTO\Recipes\CreateRecipeNote.cs" />
     <Compile Include="DTO\Recipes\EditRecipeNote.cs" />
@@ -110,10 +115,13 @@
     <Compile Include="Models\Ingredients\Unit.cs" />
     <Compile Include="Models\Recipes\Recipe.cs" />
     <Compile Include="Models\Recipes\Tag.cs" />
+    <Compile Include="ModelValidators\Interfaces\IAbstractDatabaseValidator.cs" />
+    <Compile Include="ModelValidators\Interfaces\IInputIngredientValidator.cs" />
+    <Compile Include="ModelValidators\Validators\AbstractDatabaseValidator.cs" />
     <Compile Include="ModelValidators\RecipeValidator.cs" />
     <Compile Include="ModelValidators\RegisterValidator.cs" />
     <Compile Include="ModelValidators\IngredientQuantityValidator.cs" />
-    <Compile Include="ModelValidators\IngredientValidator.cs" />
+    <Compile Include="ModelValidators\Validators\InputIngredientValidator.cs" />
     <Compile Include="ModelValidators\ChangePasswordValidator.cs" />
     <Compile Include="ModelValidators\SetPasswordValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -143,6 +151,7 @@
     <Content Include="SeedLists\UnitList.txt" />
     <Content Include="SeedLists\IngredientList.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
