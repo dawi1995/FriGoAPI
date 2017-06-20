@@ -75,6 +75,7 @@ namespace FriGo.Api.Controllers
                     new Error(HttpStatusCode.NotAcceptable, Properties.Resources.FileNotImageMessage));
 
             Image image = AutoMapper.Map<byte[], Image>(contentBytes);
+            image.UserId = new Guid(User.Identity.GetUserId());
             imageService.Add(image);
 
             var imageUri = new Uri(Path.Combine(Request.RequestUri.AbsoluteUri, image.Id.ToString()));
@@ -90,7 +91,17 @@ namespace FriGo.Api.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, Type = typeof(Error), Description = "Not found")]
         public virtual HttpResponseMessage Delete(Guid id)
         {
-            throw new NotImplementedException();
+            Image image = imageService.Get(id);
+            if (image == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound,
+                    new Error(HttpStatusCode.NotFound, Properties.Resources.GenericNotFoundMessage));
+
+            if (!imageService.IsUserAuthorized(id, new Guid(User.Identity.GetUserId())))
+                return Request.CreateResponse(HttpStatusCode.Forbidden,
+                    new Error(HttpStatusCode.Forbidden, Properties.Resources.ImageNotAuthorized));
+
+            imageService.Delete(id);
+            return Request.CreateResponse(HttpStatusCode.NoContent);
         }
     }
 }

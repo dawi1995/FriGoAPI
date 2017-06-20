@@ -151,6 +151,15 @@ namespace FriGo.Api.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nie możesz usunąć zdjęcia którego sam nie dodałeś..
+        /// </summary>
+        internal static string ImageNotAuthorized {
+            get {
+                return ResourceManager.GetString("ImageNotAuthorized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Składnik nie znajduje się w naszej bazie..
         /// </summary>
         internal static string IngredientNotFoundMessage {

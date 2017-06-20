@@ -38,5 +38,13 @@ namespace FriGo.Services
             }
             return true;
         }
+
+        public bool IsUserAuthorized(Guid imageId, Guid userId)
+        {
+            Image image = Get(imageId);
+
+            if (image == null) return false;
+            return image.UserId == userId;
+        }
     }
 }

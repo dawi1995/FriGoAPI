@@ -13,5 +13,6 @@ namespace FriGo.ServiceInterfaces
         void Edit(Image image);
         void Delete(Guid id);
         bool IsValidImage(byte[] bytes);
+        bool IsUserAuthorized(Guid imageId, Guid userId);
     }
 }
