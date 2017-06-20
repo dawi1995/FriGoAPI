@@ -180,6 +180,7 @@ namespace FriGo.Api
 
 
                         c.DocumentFilter<AuthTokenOperation>();
+                        c.OperationFilter<AddFileOperation>();
                     })
                 .EnableSwaggerUi(c =>
                     {

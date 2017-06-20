@@ -135,6 +135,9 @@
   <data name="FileNotImageMessage" xml:space="preserve">
     <value>Wysłany plik nie był formatu graficznego.</value>
   </data>
+  <data name="FormDataMimeType" xml:space="preserve">
+    <value>application/form-data</value>
+  </data>
   <data name="FormDataParameterTypeName" xml:space="preserve">
     <value>formData</value>
   </data>
@@ -147,8 +150,23 @@
   <data name="GrantTypeParameterDescription" xml:space="preserve">
     <value>preferably grant_type=password</value>
   </data>
+  <data name="ImageDataTypeName" xml:space="preserve">
+    <value>file</value>
+  </data>
   <data name="ImageNotAuthorized" xml:space="preserve">
     <value>Nie możesz usunąć zdjęcia którego sam nie dodałeś.</value>
+  </data>
+  <data name="ImageParameterDescription" xml:space="preserve">
+    <value>Upload image file</value>
+  </data>
+  <data name="ImageParameterName" xml:space="preserve">
+    <value>image file</value>
+  </data>
+  <data name="ImageParameterType" xml:space="preserve">
+    <value>formData</value>
+  </data>
+  <data name="ImagePostOperationId" xml:space="preserve">
+    <value>Image_Post</value>
   </data>
   <data name="IngredientNotFoundMessage" xml:space="preserve">
     <value>Składnik nie znajduje się w naszej bazie.</value>

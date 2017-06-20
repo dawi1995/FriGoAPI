@@ -115,6 +115,15 @@ namespace FriGo.Api.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to application/form-data.
+        /// </summary>
+        internal static string FormDataMimeType {
+            get {
+                return ResourceManager.GetString("FormDataMimeType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to formData.
         /// </summary>
         internal static string FormDataParameterTypeName {
@@ -151,11 +160,56 @@ namespace FriGo.Api.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to file.
+        /// </summary>
+        internal static string ImageDataTypeName {
+            get {
+                return ResourceManager.GetString("ImageDataTypeName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nie możesz usunąć zdjęcia którego sam nie dodałeś..
         /// </summary>
         internal static string ImageNotAuthorized {
             get {
                 return ResourceManager.GetString("ImageNotAuthorized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload image file.
+        /// </summary>
+        internal static string ImageParameterDescription {
+            get {
+                return ResourceManager.GetString("ImageParameterDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to image file.
+        /// </summary>
+        internal static string ImageParameterName {
+            get {
+                return ResourceManager.GetString("ImageParameterName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to formData.
+        /// </summary>
+        internal static string ImageParameterType {
+            get {
+                return ResourceManager.GetString("ImageParameterType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image_Post.
+        /// </summary>
+        internal static string ImagePostOperationId {
+            get {
+                return ResourceManager.GetString("ImagePostOperationId", resourceCulture);
             }
         }
         
