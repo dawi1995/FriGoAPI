@@ -67,7 +67,6 @@ namespace FriGo.Api.Controllers
         /// <param name="nameSearchQuery">Search by name</param>
         /// <param name="tagQuery">Search by tags</param>
         /// <returns></returns>
-
         [SwaggerResponse(HttpStatusCode.OK, Type = typeof(RecipeDto))]
         public virtual HttpResponseMessage Get(Tag[] tagQuery, int page = 1, int perPage = 10, string sortField = null, decimal fitness = 0,
             bool descending = false, string nameSearchQuery = null)
@@ -109,10 +108,8 @@ namespace FriGo.Api.Controllers
         /// <param name="id"></param>
         /// <param name="createRecipe"></param>
         /// <returns>Created unit</returns>
-        [Authorize]
         [SwaggerResponse(HttpStatusCode.Created, Type = typeof(RecipeDto), Description = "Recipe created")]
         [SwaggerResponse(HttpStatusCode.Unauthorized, Type = typeof(Error), Description = "Forbidden")]
-        [Authorize]
         public virtual IHttpActionResult Post(CreateRecipe createRecipe)
         {
             if (!ModelState.IsValid)
@@ -138,11 +135,9 @@ namespace FriGo.Api.Controllers
         /// Delete recipe
         /// </summary>
         /// <param name="id"></param>
-        [Authorize]
         [SwaggerResponse(HttpStatusCode.NoContent, Description = "Recipe deleted")]
         [SwaggerResponse(HttpStatusCode.Unauthorized, Type = typeof(Error), Description = "Forbidden")]
         [SwaggerResponse(HttpStatusCode.NotFound, Type = typeof(Error), Description = "Not found")]
-        [Authorize]
         public virtual HttpResponseMessage Delete(Guid id)
         {
             var uid = User.Identity.GetUserId();
@@ -183,24 +178,5 @@ namespace FriGo.Api.Controllers
 
             return BadRequest(ModelState);
         }
-        /* Upload file example
-         * 
-        public async Task<byte[]> UploadImage()
-        {
-            if (!Request.Content.IsMimeMultipartContent())
-                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
-
-            var provider = new MultipartMemoryStreamProvider();
-            await Request.Content.ReadAsMultipartAsync(provider);
-
-            if (provider.Contents.Count == 0) return null;
-
-            var file = provider.Contents[0];
-            var filename = file.Headers.ContentDisposition.FileName.Trim('\"');
-            var buffer = await file.ReadAsByteArrayAsync();
-            return buffer;
-        }
-        */
     }
-
 }

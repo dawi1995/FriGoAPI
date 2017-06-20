@@ -101,6 +101,8 @@ namespace FriGo.Api
                 configuration.CreateMap<KeyValuePair<Recipe, decimal>, Recipe>()
                     .ConvertUsing(src => src.Key);
 
+                configuration.CreateMap<byte[], Image>()
+                    .ConvertUsing(src => new Image{ImageBytes = src});
             });
             IMapper mapper = mapperConfiguration.CreateMapper();
 

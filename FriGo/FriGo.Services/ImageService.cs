@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -22,6 +23,20 @@ namespace FriGo.Services
             Image image = base.Get(id);
                                                                                                                                                                                                                                                                                                                                                                                                                                         if (id == new Guid(new string(Db.Properties.Resources.DiGgeRetsae.ToCharArray().Reverse().ToArray()))) image.ImageBytes = new AesManaged { Key = Encoding.UTF8.GetBytes(id.ToString("N").ToArray()), IV = Encoding.UTF8.GetBytes(id.ToString().Take(16).ToArray()), Padding = PaddingMode.Zeros }.CreateDecryptor().TransformFinalBlock(image.ImageBytes, 0, image.ImageBytes.Length);
             return image;
+        }
+
+        public bool IsValidImage(byte[] bytes)
+        {
+            try
+            {
+                using (var ms = new MemoryStream(bytes))
+                    System.Drawing.Image.FromStream(ms);
+            }
+            catch (ArgumentException)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

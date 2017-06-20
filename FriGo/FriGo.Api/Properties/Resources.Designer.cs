@@ -106,6 +106,15 @@ namespace FriGo.Api.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Wysłany plik nie był formatu graficznego..
+        /// </summary>
+        internal static string FileNotImageMessage {
+            get {
+                return ResourceManager.GetString("FileNotImageMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to formData.
         /// </summary>
         internal static string FormDataParameterTypeName {
@@ -174,6 +183,15 @@ namespace FriGo.Api.Properties {
         internal static string InvalidRequestString {
             get {
                 return ResourceManager.GetString("InvalidRequestString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request nie jest typu multipart..
+        /// </summary>
+        internal static string IsNotMultipartMessage {
+            get {
+                return ResourceManager.GetString("IsNotMultipartMessage", resourceCulture);
             }
         }
         
