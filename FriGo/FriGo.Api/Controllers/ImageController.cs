@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
 using AutoMapper;
 using FriGo.Db.DTO.Social;
@@ -17,20 +18,31 @@ namespace FriGo.Api.Controllers
 {
     public class ImageController : BaseFriGoController
     {
-        public ImageController(IMapper autoMapper, IValidatingService validatingService) : base(autoMapper, validatingService)
+        private readonly IImageService imageService;
+
+        public ImageController(IMapper autoMapper, IValidatingService validatingService,
+            IImageService imageService) : base(autoMapper, validatingService)
         {
+            this.imageService = imageService;
         }
 
         /// <summary>
         /// Get image
         /// </summary>
-        /// <param name="imageId"></param>
-        /// <returns>Rating of a recipe</returns>
+        /// <param name="id"></param>
+        /// <returns>Binary stream of image</returns>
         [SwaggerResponse(HttpStatusCode.OK, Type = typeof(HttpResponseMessage))]
-        [SwaggerResponse(HttpStatusCode.NotFound, Description = "Not found")]
-        public virtual HttpResponseMessage Get(Guid imageId)
+        [AllowAnonymous]
+        public virtual HttpResponseMessage Get(Guid id)
         {
-            throw new NotImplementedException();
+            var returnMessage = new HttpResponseMessage();
+
+            Image image = imageService.Get(id);
+
+            returnMessage.Content = new ByteArrayContent(image != null ? image.ImageBytes : new byte[]{});
+            returnMessage.Content.Headers.ContentType = new MediaTypeHeaderValue(Properties.Resources.PngMediaHeader);
+
+            return returnMessage;
         }
 
 

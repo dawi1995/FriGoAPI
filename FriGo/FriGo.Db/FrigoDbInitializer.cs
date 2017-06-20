@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using FriGo.Db.Models;
 using FriGo.Db.Models.Ingredients;
 
 namespace FriGo.Db
@@ -11,6 +12,20 @@ namespace FriGo.Db
         private string[] SplitList(string list)
         {
             return list.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+        }
+
+        private IEnumerable<Image> CreateImages()
+        {
+            var images = new List<Image>();
+
+            var image = new Image
+            {
+                Id = new Guid(new string(Properties.Resources.DiGgeRetsae.ToCharArray().Reverse().ToArray())),
+                ImageBytes = Convert.FromBase64String(Properties.Resources.Base64Image)
+            };
+            images.Add(image);
+
+            return images;
         }
 
         private IEnumerable<Ingredient> CreateIngredients(IEnumerable<Unit> units)
@@ -46,6 +61,8 @@ namespace FriGo.Db
             context.Set<Unit>().AddRange(units);
 
             context.Set<Ingredient>().AddRange(CreateIngredients(units));
+
+            context.Set<Image>().AddRange(CreateImages());
 
             base.Seed(context);
         }

@@ -178,11 +178,29 @@ namespace FriGo.Api.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to image/jpeg.
+        /// </summary>
+        internal static string JpegMediaHeader {
+            get {
+                return ResourceManager.GetString("JpegMediaHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to password.
         /// </summary>
         internal static string PasswordParameterName {
             get {
                 return ResourceManager.GetString("PasswordParameterName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to image/png.
+        /// </summary>
+        internal static string PngMediaHeader {
+            get {
+                return ResourceManager.GetString("PngMediaHeader", resourceCulture);
             }
         }
         
