@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Web;
 using System.Web.Http;
 using AutoMapper;
 using FriGo.Db.DTO.Social;
@@ -17,49 +20,88 @@ namespace FriGo.Api.Controllers
 {
     public class ImageController : BaseFriGoController
     {
-        public ImageController(IMapper autoMapper, IValidatingService validatingService) : base(autoMapper, validatingService)
+        private const int FirstFileIndex = 0;
+
+        private readonly IImageService imageService;
+
+        public ImageController(IMapper autoMapper, IValidatingService validatingService,
+            IImageService imageService) : base(autoMapper, validatingService)
         {
+            this.imageService = imageService;
         }
 
         /// <summary>
         /// Get image
         /// </summary>
-        /// <param name="imageId"></param>
-        /// <returns>Rating of a recipe</returns>
+        /// <param name="id"></param>
+        /// <returns>Binary stream of image</returns>
         [SwaggerResponse(HttpStatusCode.OK, Type = typeof(HttpResponseMessage))]
-        [SwaggerResponse(HttpStatusCode.NotFound, Description = "Not found")]
-        public virtual HttpResponseMessage Get(Guid imageId)
+        [AllowAnonymous]
+        public virtual HttpResponseMessage Get(Guid id)
         {
-            throw new NotImplementedException();
+            var returnMessage = new HttpResponseMessage();
+
+            Image image = imageService.Get(id);
+
+            returnMessage.Content = new ByteArrayContent(image != null ? image.ImageBytes : new byte[]{});
+            returnMessage.Content.Headers.ContentType = new MediaTypeHeaderValue(Properties.Resources.PngMediaHeader);
+
+            return returnMessage;
         }
 
 
         /// <summary>
         /// Upload image 
         /// </summary>
-        /// <returns></returns>
-        [Authorize]
-        [SwaggerResponse(HttpStatusCode.Created,Description = "Image uploaded")]
+        /// <returns>Uri to uploaded image</returns>
+        [SwaggerResponse(HttpStatusCode.Created, Type = typeof(Uri), Description = "Image uploaded")]
         [SwaggerResponse(HttpStatusCode.Unauthorized, Type = typeof(Error), Description = "Forbidden")]
-        [Authorize]
+        [SwaggerResponse(HttpStatusCode.NotAcceptable, Type = typeof(Error), Description = "Not image mime multipart")]
         public virtual HttpResponseMessage Post()
         {
-            throw new NotImplementedException();
+            if (!Request.Content.IsMimeMultipartContent())
+                return Request.CreateResponse(HttpStatusCode.NotAcceptable,
+                    new Error(HttpStatusCode.NotAcceptable, Properties.Resources.IsNotMultipartMessage));
+
+            HttpRequest httpRequest = HttpContext.Current.Request;
+            HttpPostedFile file = httpRequest.Files[FirstFileIndex];
+
+            byte[] contentBytes;
+            using (var binaryReader = new BinaryReader(file.InputStream))
+                contentBytes = binaryReader.ReadBytes(file.ContentLength);
+
+            if (!imageService.IsValidImage(contentBytes))
+                return Request.CreateResponse(HttpStatusCode.NotAcceptable,
+                    new Error(HttpStatusCode.NotAcceptable, Properties.Resources.FileNotImageMessage));
+
+            Image image = AutoMapper.Map<byte[], Image>(contentBytes);
+            image.UserId = new Guid(User.Identity.GetUserId());
+            imageService.Add(image);
+
+            var imageUri = new Uri(Path.Combine(Request.RequestUri.AbsoluteUri, image.Id.ToString()));
+            return Request.CreateResponse(HttpStatusCode.Created, imageUri.AbsoluteUri);
         }
 
         /// <summary>
         /// Delete image
         /// </summary>
         /// <param name="id"></param>
-        [Authorize]
-        [SwaggerResponseRemoveDefaults]
         [SwaggerResponse(HttpStatusCode.NoContent, Description = "Image deleted")]
         [SwaggerResponse(HttpStatusCode.Unauthorized, Type = typeof(Error), Description = "Forbidden")]
         [SwaggerResponse(HttpStatusCode.NotFound, Type = typeof(Error), Description = "Not found")]
-        [Authorize]
         public virtual HttpResponseMessage Delete(Guid id)
         {
-            throw new NotImplementedException();
+            Image image = imageService.Get(id);
+            if (image == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound,
+                    new Error(HttpStatusCode.NotFound, Properties.Resources.GenericNotFoundMessage));
+
+            if (!imageService.IsUserAuthorized(id, new Guid(User.Identity.GetUserId())))
+                return Request.CreateResponse(HttpStatusCode.Forbidden,
+                    new Error(HttpStatusCode.Forbidden, Properties.Resources.ImageNotAuthorized));
+
+            imageService.Delete(id);
+            return Request.CreateResponse(HttpStatusCode.NoContent);
         }
     }
 }

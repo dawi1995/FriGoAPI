@@ -90,6 +90,7 @@
     <Compile Include="DTO\Recipes\RecipeStub.cs" />
     <Compile Include="DTO\Units\EditUnit.cs" />
     <Compile Include="DTO\Account\UserStub.cs" />
+    <Compile Include="EntityConfigurations\ImageConfiguration.cs" />
     <Compile Include="EntityConfigurations\IngredientConfiguration.cs" />
     <Compile Include="EntityConfigurations\TagConfiguration.cs" />
     <Compile Include="EntityConfigurations\IngredientQuantityConfiguration.cs" />
@@ -145,12 +146,13 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Base64Image.txt" />
     <Content Include="SeedLists\UnitList.txt" />
     <Content Include="SeedLists\IngredientList.txt" />
   </ItemGroup>
