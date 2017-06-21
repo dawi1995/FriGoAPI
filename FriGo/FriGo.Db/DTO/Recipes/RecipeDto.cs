@@ -14,10 +14,11 @@ namespace FriGo.Db.DTO.Recipes
         public Models.Ingredients.IngredientQuantity[] IngredientQuantities { get; set; }
         public IEnumerable<CommentDto> Comments { get; set; }
         public IEnumerable<Tag> Tags { get; set;}
+        public IEnumerable<RecipeNote> Notes { get; set; }
         public UserStub User { get; set; }
-        public string Base64Picture { get; set; }
         public decimal? Rating { get; set; }
         public int? UserRating { get; set; }
+        public string ImageUrl { get; set; }
         public DateTime CreatedAt { get; set; }
         public decimal Fitness { get; set; }
         public IEnumerable<Models.Ingredients.IngredientQuantity> MissingIngredientQuantities { get; set; }

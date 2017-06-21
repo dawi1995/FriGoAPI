@@ -70,6 +70,15 @@ namespace FriGo.Api.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to przystawka|appetizer.
+        /// </summary>
+        internal static string AppetizerTags {
+            get {
+                return ResourceManager.GetString("AppetizerTags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to FriGo.
         /// </summary>
         internal static string AppName {
@@ -97,11 +106,47 @@ namespace FriGo.Api.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} was not found in out database..
+        /// </summary>
+        internal static string EntityNotFound {
+            get {
+                return ResourceManager.GetString("EntityNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wysłany plik nie był formatu graficznego..
+        /// </summary>
+        internal static string FileNotImageMessage {
+            get {
+                return ResourceManager.GetString("FileNotImageMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to application/form-data.
+        /// </summary>
+        internal static string FormDataMimeType {
+            get {
+                return ResourceManager.GetString("FormDataMimeType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to formData.
         /// </summary>
         internal static string FormDataParameterTypeName {
             get {
                 return ResourceManager.GetString("FormDataParameterTypeName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rekord o podanym id nie istnieje..
+        /// </summary>
+        internal static string GenericNotFoundMessage {
+            get {
+                return ResourceManager.GetString("GenericNotFoundMessage", resourceCulture);
             }
         }
         
@@ -124,11 +169,83 @@ namespace FriGo.Api.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ingredient was not found in our database..
+        ///   Looks up a localized string similar to file.
+        /// </summary>
+        internal static string ImageDataTypeName {
+            get {
+                return ResourceManager.GetString("ImageDataTypeName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nie możesz usunąć zdjęcia którego sam nie dodałeś..
+        /// </summary>
+        internal static string ImageNotAuthorized {
+            get {
+                return ResourceManager.GetString("ImageNotAuthorized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload image file.
+        /// </summary>
+        internal static string ImageParameterDescription {
+            get {
+                return ResourceManager.GetString("ImageParameterDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to image file.
+        /// </summary>
+        internal static string ImageParameterName {
+            get {
+                return ResourceManager.GetString("ImageParameterName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to formData.
+        /// </summary>
+        internal static string ImageParameterType {
+            get {
+                return ResourceManager.GetString("ImageParameterType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image_Post.
+        /// </summary>
+        internal static string ImagePostOperationId {
+            get {
+                return ResourceManager.GetString("ImagePostOperationId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Składnik nie znajduje się w naszej bazie..
         /// </summary>
         internal static string IngredientNotFoundMessage {
             get {
                 return ResourceManager.GetString("IngredientNotFoundMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nie możesz usunąć nie swojego składnika..
+        /// </summary>
+        internal static string IngredientQuantityDeleteForbiddenMessage {
+            get {
+                return ResourceManager.GetString("IngredientQuantityDeleteForbiddenMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nie możesz edytować nie swojej lodówki..
+        /// </summary>
+        internal static string IngredientQuantityPutForbiddenMessage {
+            get {
+                return ResourceManager.GetString("IngredientQuantityPutForbiddenMessage", resourceCulture);
             }
         }
         
@@ -142,11 +259,38 @@ namespace FriGo.Api.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Request nie jest typu multipart..
+        /// </summary>
+        internal static string IsNotMultipartMessage {
+            get {
+                return ResourceManager.GetString("IsNotMultipartMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to image/jpeg.
+        /// </summary>
+        internal static string JpegMediaHeader {
+            get {
+                return ResourceManager.GetString("JpegMediaHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to password.
         /// </summary>
         internal static string PasswordParameterName {
             get {
                 return ResourceManager.GetString("PasswordParameterName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to image/png.
+        /// </summary>
+        internal static string PngMediaHeader {
+            get {
+                return ResourceManager.GetString("PngMediaHeader", resourceCulture);
             }
         }
         

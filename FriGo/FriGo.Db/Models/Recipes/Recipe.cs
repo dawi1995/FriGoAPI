@@ -15,8 +15,8 @@ namespace FriGo.Db.Models.Recipes
 
         public string Title { get; set; }
         public string Description { get; set; }
-        public byte[] Picture { get; set; }
         public DateTime CreatedAt { get; set; }
+        public Guid? ImageId { get; set; }
 
 
 

@@ -7,6 +7,7 @@ using AutoMapper;
 using FriGo.Db.DTO.Ingredients;
 using FriGo.Db.Models;
 using FriGo.Db.Models.Ingredients;
+using FriGo.Db.ModelValidators.Interfaces;
 using FriGo.ServiceInterfaces;
 using Swashbuckle.Swagger.Annotations;
 
@@ -16,12 +17,16 @@ namespace FriGo.Api.Controllers
     {
         private readonly IIngredientService ingredientService;
         private readonly IUnitService unitService;
+        private readonly IInputIngredientValidator ingredientValidator;
 
-        public IngredientController(IMapper autoMapper, IIngredientService ingredientService, IUnitService unitService)
-            : base(autoMapper)
+
+        public IngredientController(IMapper autoMapper, IValidatingService validatingService,
+            IIngredientService ingredientService, IUnitService unitService,
+            IInputIngredientValidator ingredientValidator) : base(autoMapper, validatingService)
         {
             this.ingredientService = ingredientService;
             this.unitService = unitService;
+            this.ingredientValidator = ingredientValidator;
         }
 
         /// <summary>
@@ -61,6 +66,12 @@ namespace FriGo.Api.Controllers
         [SwaggerResponse(HttpStatusCode.Unauthorized, Type = typeof(Error), Description = "Forbidden")]
         public virtual HttpResponseMessage Post(CreateIngredient createIngredient)
         {
+            if (!ValidatingService.IsValid(ingredientValidator, createIngredient))
+            {
+                Error error = ValidatingService.GenerateError(ingredientValidator, createIngredient);
+                return Request.CreateResponse(ValidatingService.GetStatusCode(), error);
+            }
+
             Ingredient ingredient = AutoMapper.Map<CreateIngredient, Ingredient>(createIngredient);
             ingredientService.Add(ingredient);
 
@@ -82,20 +93,18 @@ namespace FriGo.Api.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, Type = typeof(Error), Description = "Not found")]
         public virtual HttpResponseMessage Put(Guid id, EditIngredient editIngredient)
         {
-            Ingredient ingredient = ingredientService.Get(id);
-
-            if (ingredient == null)
+            if (!ValidatingService.IsValid(ingredientValidator, editIngredient))
             {
-                var notFoundError = new Error
-                {
-                    Code = (int) HttpStatusCode.NotFound,
-                    Message = Properties.Resources.IngredientNotFoundMessage
-                };
-
-                return Request.CreateResponse(HttpStatusCode.NotFound, notFoundError);
+                Error error = ValidatingService.GenerateError(ingredientValidator, editIngredient);
+                return Request.CreateResponse(ValidatingService.GetStatusCode(), error);
             }
-            AutoMapper.Map(editIngredient, ingredient);
 
+            Ingredient ingredient = ingredientService.Get(id);
+            if (ingredient == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound,
+                    new Error(HttpStatusCode.NotFound, Properties.Resources.GenericNotFoundMessage));
+
+            AutoMapper.Map(editIngredient, ingredient);
             ingredientService.Edit(ingredient);
 
             IngredientDto ingredientDto = AutoMapper.Map<Ingredient, IngredientDto>(ingredient);
@@ -111,6 +120,11 @@ namespace FriGo.Api.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, Type = typeof(Error), Description = "Not found")]
         public virtual HttpResponseMessage Delete(Guid id)
         {
+            Ingredient ingredient = ingredientService.Get(id);
+            if (ingredient == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound,
+                    new Error(HttpStatusCode.NotFound, Properties.Resources.GenericNotFoundMessage));
+
             ingredientService.Delete(id);
 
             return Request.CreateResponse(HttpStatusCode.NoContent);

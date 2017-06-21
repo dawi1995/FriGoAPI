@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -30,27 +30,40 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentValidation, Version=6.4.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.6.4.1\lib\Net45\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseService.cs" />
     <Compile Include="CommentService.cs" />
     <Compile Include="CrudService.cs" />
+    <Compile Include="FitnessSearchEngine.cs" />
+    <Compile Include="FitnessService.cs" />
     <Compile Include="IngredientQuantityService.cs" />
-    <Compile Include="RateService.cs" />
+    <Compile Include="ImageService.cs" />
+    <Compile Include="RecipeNoteService.cs" />
     <Compile Include="RecipeService.cs" />
     <Compile Include="SearchEngine.cs" />
+    <Compile Include="TagService.cs" />
     <Compile Include="UnitService.cs" />
     <Compile Include="IngredientService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserService.cs" />
+    <Compile Include="ValidatingService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FriGo.DAL\FriGo.DAL.csproj">
-      <Project>{b6e7b2f0-5668-4778-a12c-200f5a58e6f7}</Project>
-      <Name>FriGo.DAL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FriGo.Db\FriGo.Db.csproj">
       <Project>{677656d1-a4e1-4236-a438-e74b3104d001}</Project>
       <Name>FriGo.Db</Name>
@@ -66,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

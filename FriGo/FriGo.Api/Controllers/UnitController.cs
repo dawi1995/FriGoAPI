@@ -15,7 +15,9 @@ namespace FriGo.Api.Controllers
     public class UnitController : BaseFriGoController
     {
         private readonly IUnitService unitService;
-        public UnitController(IMapper autoMapper,IUnitService unitService) : base(autoMapper)
+
+        public UnitController(IMapper autoMapper, IValidatingService validatingService,
+            IUnitService unitService) : base(autoMapper, validatingService)
         {
             this.unitService = unitService;
         }
@@ -24,6 +26,7 @@ namespace FriGo.Api.Controllers
         /// Returns all types of unit
         /// </summary>
         /// <returns>An array of units</returns>
+        [AllowAnonymous]
         [SwaggerResponse(HttpStatusCode.OK, Type = typeof(IEnumerable<Unit>))]
         public virtual HttpResponseMessage Get()
         {
@@ -37,6 +40,7 @@ namespace FriGo.Api.Controllers
         /// <param name="id"></param>
         /// <returns>One type of unit</returns>
         [SwaggerResponse(HttpStatusCode.OK, Type = typeof(Unit))]
+        [AllowAnonymous]
         public virtual HttpResponseMessage Get(Guid id)
         {
             Unit unit = unitService.Get(id);
@@ -48,10 +52,8 @@ namespace FriGo.Api.Controllers
         /// </summary>
         /// <param name="createUnit"></param>
         /// <returns>Created unit</returns>
-        [Authorize]
         [SwaggerResponse(HttpStatusCode.Created, Type = typeof(Unit), Description = "Unit created")]
         [SwaggerResponse(HttpStatusCode.Unauthorized, Type = typeof(Error), Description = "Forbidden")]
-        [Authorize]
         public virtual HttpResponseMessage Post(CreateUnit createUnit)
         {
             Unit unit = AutoMapper.Map<CreateUnit, Unit>(createUnit);
@@ -68,25 +70,16 @@ namespace FriGo.Api.Controllers
         /// <param name="id"></param>
         /// <param name="editUnit"></param>
         /// <returns>Modified unit</returns>
-        [Authorize]
         [SwaggerResponse(HttpStatusCode.OK, Type = typeof(Unit), Description = "Unit updated")]
         [SwaggerResponse(HttpStatusCode.Unauthorized, Type = typeof(Error), Description = "Forbidden")]
         [SwaggerResponse(HttpStatusCode.NotFound, Type = typeof(Error), Description = "Not found")]
-        [Authorize]
         public virtual HttpResponseMessage Put(Guid id, EditUnit editUnit)
         {
             Unit unit = unitService.Get(id);
-
             if (unit == null)
-            {
-                var notFoundError = new Error
-                {
-                    Code = (int)HttpStatusCode.NotFound,
-                    Message = Properties.Resources.UnitNotFoundMessage
-                };
+                return Request.CreateResponse(HttpStatusCode.NotFound,
+                    new Error(HttpStatusCode.NotFound, Properties.Resources.GenericNotFoundMessage));
 
-                return Request.CreateResponse(HttpStatusCode.NotFound, notFoundError);
-            }
             AutoMapper.Map(editUnit, unit);
             unitService.Edit(unit);
 
@@ -98,13 +91,16 @@ namespace FriGo.Api.Controllers
         /// Delete type of unit
         /// </summary>
         /// <param name="id"></param>
-        [Authorize]
         [SwaggerResponse(HttpStatusCode.NoContent, Description = "Unit deleted")]
         [SwaggerResponse(HttpStatusCode.Unauthorized, Type = typeof(Error), Description = "Forbidden")]
         [SwaggerResponse(HttpStatusCode.NotFound, Type = typeof(Error), Description = "Not found")]
-        [Authorize]
         public virtual HttpResponseMessage Delete(Guid id)
         {
+            Unit unit = unitService.Get(id);
+            if (unit == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound,
+                    new Error(HttpStatusCode.NotFound, Properties.Resources.GenericNotFoundMessage));
+
             unitService.Delete(id);
 
             return Request.CreateResponse(HttpStatusCode.NoContent);

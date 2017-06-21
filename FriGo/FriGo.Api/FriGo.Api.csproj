@@ -255,6 +255,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseFriGoController.cs" />
+    <Compile Include="Controllers\ImageController.cs" />
+    <Compile Include="Controllers\RecipeNoteController.cs" />
     <Compile Include="Controllers\IngredientQuantityController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\TagController.cs" />
@@ -263,6 +265,7 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UnitController.cs" />
     <Compile Include="Controllers\IngredientController.cs" />
+    <Compile Include="Filters\AddFileOperation.cs" />
     <Compile Include="Filters\AuthTokenOperation.cs" />
     <Compile Include="Filters\ValidateModelStateFilter.cs" />
     <Compile Include="Global.asax.cs">
@@ -333,10 +336,6 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FriGo.DAL\FriGo.DAL.csproj">
-      <Project>{b6e7b2f0-5668-4778-a12c-200f5a58e6f7}</Project>
-      <Name>FriGo.DAL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FriGo.Db\FriGo.Db.csproj">
       <Project>{677656d1-a4e1-4236-a438-e74b3104d001}</Project>
       <Name>FriGo.Db</Name>
@@ -358,6 +357,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

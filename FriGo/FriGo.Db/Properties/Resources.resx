@@ -117,23 +117,77 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ConfirmPasswordValidationMessage" xml:space="preserve">
-    <value>The new password and confirmation password do not match.</value>
-  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="appetizer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\appetizer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="AppetizerImageId" xml:space="preserve">
+    <value>9CCFA6BD1C364830910E4B024858DDC0</value>
+  </data>
+  <data name="AppetizerTags" xml:space="preserve">
+    <value>przystawka|appetizer</value>
+  </data>
+  <data name="Base64Image" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Base64Image.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1250</value>
+  </data>
+  <data name="ConfirmPasswordValidationMessage" xml:space="preserve">
+    <value>Wartości w polach nowe hasło oraz potwierdzenie nowego hasła są różne.</value>
+  </data>
+  <data name="dessert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dessert.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DessertImageId" xml:space="preserve">
+    <value>43410B819BFB4FDC8F5BF892976FEE47</value>
+  </data>
+  <data name="DessertTags" xml:space="preserve">
+    <value>deser|desssert|sweet</value>
+  </data>
+  <data name="DiGgeRetsae" xml:space="preserve">
+    <value>F62716B6F62716B6F62716B6F62716B6</value>
+  </data>
+  <data name="EmailExistsValidationMessage" xml:space="preserve">
+    <value>Podany adres email jest już zajęty.</value>
+  </data>
+  <data name="EmailRegexValidationMessage" xml:space="preserve">
+    <value>Podany adres email nie przechodzi walidacji wyrażeniem regularnym.</value>
+  </data>
+  <data name="EmptyGenericValidationMessage" xml:space="preserve">
+    <value>Pole {0} nie może być puste.</value>
+  </data>
   <data name="IngredientList" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SeedLists\IngredientList.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="IngredientNameValidationMessage" xml:space="preserve">
-    <value>Nazwa składnika nie może przekraczać 100 znaków.</value>
+  <data name="IngredientNameEmptyValidationMessage" xml:space="preserve">
+    <value>Nazwa składnika nie może być pusta.</value>
+  </data>
+  <data name="IngredientNameLengthValidationMessage" xml:space="preserve">
+    <value>Nazwa składnika musi mieścić się w granicach 1-100 znaków.</value>
+  </data>
+  <data name="IngredientNameUniqueValidationMessage" xml:space="preserve">
+    <value>Mamy już składnik o takiej nazwie.</value>
   </data>
   <data name="IngredientQuantityValidationMessage" xml:space="preserve">
     <value>Ilość musi być liczbą dodatnią.</value>
   </data>
+  <data name="IngredientUnitExistMessage" xml:space="preserve">
+    <value>Jednostka o podanym Id nie istnieje.</value>
+  </data>
+  <data name="main" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\main.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MainCourseImageId" xml:space="preserve">
+    <value>A9DF6800D94C4149B4AD47E46CC9BD1E</value>
+  </data>
   <data name="PasswordLengthValidationMessage" xml:space="preserve">
-    <value>The password must be at least {0} characters long.</value>
+    <value>Hasło musi składać się z minimum {0} znaków.</value>
+  </data>
+  <data name="TagsDelimiter" xml:space="preserve">
+    <value>|</value>
   </data>
   <data name="UnitList" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SeedLists\UnitList.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="UsernameExistsValidationMessage" xml:space="preserve">
+    <value>Użytkownik o podanej nazwie już istnieje.</value>
   </data>
 </root>

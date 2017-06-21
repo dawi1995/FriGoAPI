@@ -22,7 +22,7 @@ namespace FriGo.Db.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace FriGo.Db.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("FriGo.Db.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace FriGo.Db.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,11 +61,112 @@ namespace FriGo.Db.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The new password and confirmation password do not match..
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static string ConfirmPasswordValidationMessage {
+        public static System.Drawing.Bitmap appetizer {
+            get {
+                object obj = ResourceManager.GetObject("appetizer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 9CCFA6BD1C364830910E4B024858DDC0.
+        /// </summary>
+        public static string AppetizerImageId {
+            get {
+                return ResourceManager.GetString("AppetizerImageId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to przystawka|appetizer.
+        /// </summary>
+        public static string AppetizerTags {
+            get {
+                return ResourceManager.GetString("AppetizerTags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 8kEHBEL9iaf/owaRD1nnZXYd6LSMZsoAtQ5dCz3ZktDGTyQ4lFmR8NBQtMVd7geiIxIbrETk9qpafwlk+CZn7jMq17v6iAFojBOuowif0YTDXtCfHxEFkSDDpLhD6bbacSwxtKz5H6SkLpHTClIzjGWtBJKz/OXJoHKxwrrlZw1olk76TFHDuvCMsPjROOkAX7Uo/k+UXAQM+j64kMue/RO3JEkHYL1LLZS3GtQFrAYvqjieDpOzuMiG4bH2wOtAnOTwXJnR7WWbFjfKMStf8vPHsYlIa8kq3LlBtFjT9HBqkyhLpldOW6rAbF+lh5KPEUi4XahYqKTm3yXl0RfjmW2tqHjTycdU/RAO/OBbhvQxUxvwTgtuk6DH6i6LHzT170XIErO6Nu03ElUvQ0TO0v7idEgjG7ZuoIuxNt74ExjM0UFZ2R5Xvkfel53RF7k1xk5AaTZeCQOm1hLA+/kp5QwrkALMd0vX+WPErF/FyHEvtD1cjXDzNI6b1Q2bS6mN [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string Base64Image {
+            get {
+                return ResourceManager.GetString("Base64Image", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wartości w polach nowe hasło oraz potwierdzenie nowego hasła są różne..
+        /// </summary>
+        public static string ConfirmPasswordValidationMessage {
             get {
                 return ResourceManager.GetString("ConfirmPasswordValidationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap dessert {
+            get {
+                object obj = ResourceManager.GetObject("dessert", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 43410B819BFB4FDC8F5BF892976FEE47.
+        /// </summary>
+        public static string DessertImageId {
+            get {
+                return ResourceManager.GetString("DessertImageId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to deser|desssert|sweet.
+        /// </summary>
+        public static string DessertTags {
+            get {
+                return ResourceManager.GetString("DessertTags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to F62716B6F62716B6F62716B6F62716B6.
+        /// </summary>
+        public static string DiGgeRetsae {
+            get {
+                return ResourceManager.GetString("DiGgeRetsae", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Podany adres email jest już zajęty..
+        /// </summary>
+        public static string EmailExistsValidationMessage {
+            get {
+                return ResourceManager.GetString("EmailExistsValidationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Podany adres email nie przechodzi walidacji wyrażeniem regularnym..
+        /// </summary>
+        public static string EmailRegexValidationMessage {
+            get {
+                return ResourceManager.GetString("EmailRegexValidationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pole {0} nie może być puste..
+        /// </summary>
+        public static string EmptyGenericValidationMessage {
+            get {
+                return ResourceManager.GetString("EmptyGenericValidationMessage", resourceCulture);
             }
         }
         
@@ -73,36 +174,91 @@ namespace FriGo.Db.Properties {
         ///   Looks up a localized string similar to Jajko
         ///Ryż.
         /// </summary>
-        internal static string IngredientList {
+        public static string IngredientList {
             get {
                 return ResourceManager.GetString("IngredientList", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nazwa składnika nie może przekraczać 100 znaków..
+        ///   Looks up a localized string similar to Nazwa składnika nie może być pusta..
         /// </summary>
-        internal static string IngredientNameValidationMessage {
+        public static string IngredientNameEmptyValidationMessage {
             get {
-                return ResourceManager.GetString("IngredientNameValidationMessage", resourceCulture);
+                return ResourceManager.GetString("IngredientNameEmptyValidationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nazwa składnika musi mieścić się w granicach 1-100 znaków..
+        /// </summary>
+        public static string IngredientNameLengthValidationMessage {
+            get {
+                return ResourceManager.GetString("IngredientNameLengthValidationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mamy już składnik o takiej nazwie..
+        /// </summary>
+        public static string IngredientNameUniqueValidationMessage {
+            get {
+                return ResourceManager.GetString("IngredientNameUniqueValidationMessage", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Ilość musi być liczbą dodatnią..
         /// </summary>
-        internal static string IngredientQuantityValidationMessage {
+        public static string IngredientQuantityValidationMessage {
             get {
                 return ResourceManager.GetString("IngredientQuantityValidationMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The password must be at least {0} characters long..
+        ///   Looks up a localized string similar to Jednostka o podanym Id nie istnieje..
         /// </summary>
-        internal static string PasswordLengthValidationMessage {
+        public static string IngredientUnitExistMessage {
+            get {
+                return ResourceManager.GetString("IngredientUnitExistMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap main {
+            get {
+                object obj = ResourceManager.GetObject("main", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A9DF6800D94C4149B4AD47E46CC9BD1E.
+        /// </summary>
+        public static string MainCourseImageId {
+            get {
+                return ResourceManager.GetString("MainCourseImageId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hasło musi składać się z minimum {0} znaków..
+        /// </summary>
+        public static string PasswordLengthValidationMessage {
             get {
                 return ResourceManager.GetString("PasswordLengthValidationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to |.
+        /// </summary>
+        public static string TagsDelimiter {
+            get {
+                return ResourceManager.GetString("TagsDelimiter", resourceCulture);
             }
         }
         
@@ -110,9 +266,18 @@ namespace FriGo.Db.Properties {
         ///   Looks up a localized string similar to gram
         ///mililitr.
         /// </summary>
-        internal static string UnitList {
+        public static string UnitList {
             get {
                 return ResourceManager.GetString("UnitList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Użytkownik o podanej nazwie już istnieje..
+        /// </summary>
+        public static string UsernameExistsValidationMessage {
+            get {
+                return ResourceManager.GetString("UsernameExistsValidationMessage", resourceCulture);
             }
         }
     }

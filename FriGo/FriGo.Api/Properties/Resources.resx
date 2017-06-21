@@ -120,6 +120,9 @@
   <data name="AccountEndpointName" xml:space="preserve">
     <value>Account</value>
   </data>
+  <data name="AppetizerTags" xml:space="preserve">
+    <value>przystawka|appetizer</value>
+  </data>
   <data name="AppName" xml:space="preserve">
     <value>FriGo</value>
   </data>
@@ -129,8 +132,20 @@
   <data name="CorsAllowAllWildcard" xml:space="preserve">
     <value>*</value>
   </data>
+  <data name="EntityNotFound" xml:space="preserve">
+    <value>{0} was not found in out database.</value>
+  </data>
+  <data name="FileNotImageMessage" xml:space="preserve">
+    <value>Wysłany plik nie był formatu graficznego.</value>
+  </data>
+  <data name="FormDataMimeType" xml:space="preserve">
+    <value>application/form-data</value>
+  </data>
   <data name="FormDataParameterTypeName" xml:space="preserve">
     <value>formData</value>
+  </data>
+  <data name="GenericNotFoundMessage" xml:space="preserve">
+    <value>Rekord o podanym id nie istnieje.</value>
   </data>
   <data name="GrantTypeName" xml:space="preserve">
     <value>grant_type</value>
@@ -138,14 +153,47 @@
   <data name="GrantTypeParameterDescription" xml:space="preserve">
     <value>preferably grant_type=password</value>
   </data>
+  <data name="ImageDataTypeName" xml:space="preserve">
+    <value>file</value>
+  </data>
+  <data name="ImageNotAuthorized" xml:space="preserve">
+    <value>Nie możesz usunąć zdjęcia którego sam nie dodałeś.</value>
+  </data>
+  <data name="ImageParameterDescription" xml:space="preserve">
+    <value>Upload image file</value>
+  </data>
+  <data name="ImageParameterName" xml:space="preserve">
+    <value>image file</value>
+  </data>
+  <data name="ImageParameterType" xml:space="preserve">
+    <value>formData</value>
+  </data>
+  <data name="ImagePostOperationId" xml:space="preserve">
+    <value>Image_Post</value>
+  </data>
   <data name="IngredientNotFoundMessage" xml:space="preserve">
-    <value>Ingredient was not found in our database.</value>
+    <value>Składnik nie znajduje się w naszej bazie.</value>
+  </data>
+  <data name="IngredientQuantityDeleteForbiddenMessage" xml:space="preserve">
+    <value>Nie możesz usunąć nie swojego składnika.</value>
+  </data>
+  <data name="IngredientQuantityPutForbiddenMessage" xml:space="preserve">
+    <value>Nie możesz edytować nie swojej lodówki.</value>
   </data>
   <data name="InvalidRequestString" xml:space="preserve">
     <value>Provided request was invalid</value>
   </data>
+  <data name="IsNotMultipartMessage" xml:space="preserve">
+    <value>Request nie jest typu multipart.</value>
+  </data>
+  <data name="JpegMediaHeader" xml:space="preserve">
+    <value>image/jpeg</value>
+  </data>
   <data name="PasswordParameterName" xml:space="preserve">
     <value>password</value>
+  </data>
+  <data name="PngMediaHeader" xml:space="preserve">
+    <value>image/png</value>
   </data>
   <data name="TokenEndpointDescription" xml:space="preserve">
     <value>Get authorization token (bearer)</value>

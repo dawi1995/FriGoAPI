@@ -61,14 +61,22 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAL\GenericRepository.cs" />
+    <Compile Include="DAL\IGenericRepository.cs" />
+    <Compile Include="DAL\IUnitOfWork.cs" />
+    <Compile Include="DAL\UnitOfWork.cs" />
     <Compile Include="DTO\Account\EditAccount.cs" />
     <Compile Include="DTO\IngredientQuantities\CreateIngredientQuantity.cs" />
     <Compile Include="DTO\IngredientQuantities\EditIngredientQuantity.cs" />
     <Compile Include="DTO\Ingredients\IngredientDto.cs" />
+    <Compile Include="DTO\Ingredients\InputIngredient.cs" />
     <Compile Include="DTO\Recipes\CreateRecipe.cs" />
+    <Compile Include="DTO\Recipes\CreateRecipeNote.cs" />
+    <Compile Include="DTO\Recipes\EditRecipeNote.cs" />
     <Compile Include="DTO\Recipes\RateRecipe.cs" />
     <Compile Include="DTO\Recipes\RecipeDto.cs" />
     <Compile Include="DTO\Social\CommentStub.cs" />
@@ -84,12 +92,15 @@
     <Compile Include="DTO\Units\EditUnit.cs" />
     <Compile Include="DTO\Account\UserStub.cs" />
     <Compile Include="EntityConfigurations\RateConfiguration.cs" />
+    <Compile Include="EntityConfigurations\ImageConfiguration.cs" />
+    <Compile Include="EntityConfigurations\IngredientConfiguration.cs" />
     <Compile Include="EntityConfigurations\TagConfiguration.cs" />
     <Compile Include="EntityConfigurations\IngredientQuantityConfiguration.cs" />
-    <Compile Include="EntityConfigurations\IngredientConfiguration.cs" />
+    <Compile Include="EntityConfigurations\RecipeNoteConfiguration.cs" />
     <Compile Include="FrigoContext.cs" />
     <Compile Include="FrigoDbInitializer.cs" />
     <Compile Include="Models\Authentication\ChangePasswordBindingModel.cs" />
+    <Compile Include="Models\Authentication\RecipeBindingModel.cs" />
     <Compile Include="Models\Authentication\RegisterBindingModel.cs" />
     <Compile Include="Models\Authentication\SetPasswordBindingModel.cs" />
     <Compile Include="Models\Authentication\TokenErrorResponse.cs" />
@@ -98,6 +109,8 @@
     <Compile Include="Models\Authentication\UserInfoViewModel.cs" />
     <Compile Include="Models\Authentication\UserLoginInfoViewModel.cs" />
     <Compile Include="Models\Recipes\Rate.cs" />
+    <Compile Include="Models\Image.cs" />
+    <Compile Include="Models\Recipes\RecipeNote.cs" />
     <Compile Include="Models\Social\Comment.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Error.cs" />
@@ -106,10 +119,16 @@
     <Compile Include="Models\Ingredients\Unit.cs" />
     <Compile Include="Models\Recipes\Recipe.cs" />
     <Compile Include="Models\Recipes\Tag.cs" />
-    <Compile Include="ModelValidators\RegisterValidator.cs" />
+    <Compile Include="ModelValidators\Interfaces\IAbstractDatabaseValidator.cs" />
+    <Compile Include="ModelValidators\Interfaces\IChangePasswordValidator.cs" />
+    <Compile Include="ModelValidators\Interfaces\IInputIngredientValidator.cs" />
+    <Compile Include="ModelValidators\Interfaces\IRegisterValidator.cs" />
+    <Compile Include="ModelValidators\Validators\AbstractDatabaseValidator.cs" />
+    <Compile Include="ModelValidators\RecipeValidator.cs" />
+    <Compile Include="ModelValidators\Validators\RegisterValidator.cs" />
     <Compile Include="ModelValidators\IngredientQuantityValidator.cs" />
-    <Compile Include="ModelValidators\IngredientValidator.cs" />
-    <Compile Include="ModelValidators\ChangePasswordValidator.cs" />
+    <Compile Include="ModelValidators\Validators\InputIngredientValidator.cs" />
+    <Compile Include="ModelValidators\Validators\ChangePasswordValidator.cs" />
     <Compile Include="ModelValidators\SetPasswordValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -130,14 +149,20 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Base64Image.txt" />
+    <None Include="Resources\appetizer.png" />
+    <None Include="Resources\dessert.png" />
+    <None Include="Resources\main.png" />
     <Content Include="SeedLists\UnitList.txt" />
     <Content Include="SeedLists\IngredientList.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -53,20 +53,12 @@ namespace FriGo.Services
                       System.Reflection.BindingFlags.Public |
                       System.Reflection.BindingFlags.NonPublic).PropertyType;
 
-
-                if (checkProperty == typeof(ICollection<Tag>))
-                    ProcessedRecipes = SortByTags();
-                else if (checkProperty == typeof(ICollection<IngredientQuantity>))
-                    ProcessedRecipes = SortByIngredients();
+                if (checkProperty == typeof(ICollection<IngredientQuantity>))
+                    ProcessedRecipes = SortByFitness();
             }
         }
 
-        private IEnumerable<Recipe> SortByTags()
-        {
-            throw new NotImplementedException();
-        }
-
-        private IEnumerable<Recipe> SortByIngredients()
+        private IEnumerable<Recipe> SortByFitness()
         {
             throw new NotImplementedException();
         }

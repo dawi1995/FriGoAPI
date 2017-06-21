@@ -6,12 +6,12 @@ using System.Web.Http;
 using Autofac;
 using Autofac.Integration.WebApi;
 using AutoMapper;
-using FriGo.DAL;
 using FriGo.Db.Models;
 using FriGo.Interfaces.Dependencies;
 using FriGo.Services;
 using FriGo.Db.Models.Social;
 using FriGo.Db.DTO.Social;
+using FriGo.Db.Models.Recipes;
 
 namespace FriGo.Api
 {
@@ -98,13 +98,11 @@ namespace FriGo.Api
             {
                 configuration.CreateMissingTypeMaps = true;
 
-                configuration.CreateMap<CreateComment, Comment>()
-                    .ForMember(comment => comment.Picture,
-                    opt => opt.MapFrom(commentDto => Convert.FromBase64String((commentDto.Base64Picture))));
+                configuration.CreateMap<KeyValuePair<Recipe, decimal>, Recipe>()
+                    .ConvertUsing(src => src.Key);
 
-                configuration.CreateMap<Comment, CommentDto>()
-                .ForMember(commentDto => commentDto.Base64Picture,
-                opt => opt.MapFrom(comment => Convert.ToBase64String(comment.Picture)));
+                configuration.CreateMap<byte[], Image>()
+                    .ConvertUsing(src => new Image{ImageBytes = src});
             });
             IMapper mapper = mapperConfiguration.CreateMapper();
 
