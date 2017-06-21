@@ -47,10 +47,7 @@ namespace FriGo.Api.Controllers
             var ratesForUser = recipeService.GetRatingByUser(user, recipe);
             if (recipe == null)
                 return Request.CreateResponse(HttpStatusCode.NotFound);
-            if (recipe.User.Id != User.Identity.GetUserId())
-            {
-                return Request.CreateResponse(HttpStatusCode.Unauthorized);
-            }
+
             if (ratesForUser == null)
             {
                 Rate rate = AutoMapper.Map<RateRecipe, Rate>(rateRecipe);
