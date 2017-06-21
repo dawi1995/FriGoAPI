@@ -11,6 +11,7 @@ using Swashbuckle.Swagger.Annotations;
 using Microsoft.AspNet.Identity;
 using FriGo.Db.Models.Authentication;
 using FriGo.Db.Models.Recipes;
+using System.Linq;
 
 namespace FriGo.Api.Controllers
 {
@@ -57,18 +58,17 @@ namespace FriGo.Api.Controllers
                 return Request.CreateResponse(HttpStatusCode.OK, rate);
             }
 
-            foreach (var rateById in rateService.GetByRecipeId(recipeId))
+
+            var ratesById = rateService.GetByRecipeId(recipeId);
+            var rateById = ratesById.Where(rate => rate.User.Id == User.Identity.GetUserId()).First();
+            if (rateById != null)
             {
-                foreach (var rateByUser in rateService.GetByUserId(User.Identity.GetUserId()))
-                {
-                    if (rateById.Id == rateByUser.Id)
-                    {
-                        rateById.Rating = rateRecipe.Rate;
-                        rateService.Edit(rateById);
-                        return Request.CreateResponse(HttpStatusCode.OK, rateById);
-                    }
-                }
+                rateById.Rating = rateRecipe.Rate;
+                rateService.Edit(rateById);
+                return Request.CreateResponse(HttpStatusCode.OK, rateById);
             }
+
+
             return Request.CreateResponse(HttpStatusCode.NotFound);
         }
     }
