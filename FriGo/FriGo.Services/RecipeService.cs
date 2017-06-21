@@ -24,9 +24,17 @@ namespace FriGo.Services
 
         public decimal? GetRatingByRecipe(Recipe recipe)
         {
-                IEnumerable<Rate> rates = rateService.GetByRecipeId(recipe.Id);
+            IEnumerable<Rate> rates = rateService.GetByRecipeId(recipe.Id);
+            if (rates.Count()>0)
+            {
                 decimal rating = rating = rates.Select(rate => rate.Rating).Sum() / rates.Count();
                 return rating;
+            }
+            else
+            {
+                return null;
+            }
+
 
 
         }
