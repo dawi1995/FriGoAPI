@@ -80,6 +80,15 @@ namespace FriGo.Db.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to przystawka|appetizer.
+        /// </summary>
+        public static string AppetizerTags {
+            get {
+                return ResourceManager.GetString("AppetizerTags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 8kEHBEL9iaf/owaRD1nnZXYd6LSMZsoAtQ5dCz3ZktDGTyQ4lFmR8NBQtMVd7geiIxIbrETk9qpafwlk+CZn7jMq17v6iAFojBOuowif0YTDXtCfHxEFkSDDpLhD6bbacSwxtKz5H6SkLpHTClIzjGWtBJKz/OXJoHKxwrrlZw1olk76TFHDuvCMsPjROOkAX7Uo/k+UXAQM+j64kMue/RO3JEkHYL1LLZS3GtQFrAYvqjieDpOzuMiG4bH2wOtAnOTwXJnR7WWbFjfKMStf8vPHsYlIa8kq3LlBtFjT9HBqkyhLpldOW6rAbF+lh5KPEUi4XahYqKTm3yXl0RfjmW2tqHjTycdU/RAO/OBbhvQxUxvwTgtuk6DH6i6LHzT170XIErO6Nu03ElUvQ0TO0v7idEgjG7ZuoIuxNt74ExjM0UFZ2R5Xvkfel53RF7k1xk5AaTZeCQOm1hLA+/kp5QwrkALMd0vX+WPErF/FyHEvtD1cjXDzNI6b1Q2bS6mN [rest of string was truncated]&quot;;.
         /// </summary>
         public static string Base64Image {
@@ -113,6 +122,15 @@ namespace FriGo.Db.Properties {
         public static string DessertImageId {
             get {
                 return ResourceManager.GetString("DessertImageId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to deser|desssert|sweet.
+        /// </summary>
+        public static string DessertTags {
+            get {
+                return ResourceManager.GetString("DessertTags", resourceCulture);
             }
         }
         
@@ -232,6 +250,15 @@ namespace FriGo.Db.Properties {
         public static string PasswordLengthValidationMessage {
             get {
                 return ResourceManager.GetString("PasswordLengthValidationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to |.
+        /// </summary>
+        public static string TagsDelimiter {
+            get {
+                return ResourceManager.GetString("TagsDelimiter", resourceCulture);
             }
         }
         

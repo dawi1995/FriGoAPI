@@ -70,6 +70,15 @@ namespace FriGo.Api.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to przystawka|appetizer.
+        /// </summary>
+        internal static string AppetizerTags {
+            get {
+                return ResourceManager.GetString("AppetizerTags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to FriGo.
         /// </summary>
         internal static string AppName {

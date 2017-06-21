@@ -17,7 +17,7 @@ namespace FriGo.Db.Models.Recipes
         public string Description { get; set; }
         public int Rating { get; set; }
         public DateTime CreatedAt { get; set; }
-        public Guid ImageId { get; set; }
+        public Guid? ImageId { get; set; }
 
         public virtual User User { get; set; }
 
