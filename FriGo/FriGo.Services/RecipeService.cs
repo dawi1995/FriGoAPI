@@ -42,14 +42,15 @@ namespace FriGo.Services
         decimal? IRecipeService.GetRatingByUser(User user, Recipe recipe)
         {
             var rates = rateService.GetByRecipeId(recipe.Id);
-            foreach (var rate in rates)
+            if (rates.Count() > 0)
             {
-                if (rate.User.Id == user.Id)
-                {
-                    return rate.Rating;
-                }
+                var rateForUser = rates.Where(rate => rate.User.Id == user.Id).First();
+                return rateForUser.Rating;
             }
-            return null;
+            else
+            {
+                return null;
+            }
         }
     }
 }
