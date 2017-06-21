@@ -120,6 +120,9 @@
   <data name="AccountEndpointName" xml:space="preserve">
     <value>Account</value>
   </data>
+  <data name="AppetizerTags" xml:space="preserve">
+    <value>przystawka|appetizer</value>
+  </data>
   <data name="AppName" xml:space="preserve">
     <value>FriGo</value>
   </data>

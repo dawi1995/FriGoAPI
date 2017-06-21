@@ -110,7 +110,8 @@ namespace FriGo.Api.Controllers
         /// <returns>Created unit</returns>
         [SwaggerResponse(HttpStatusCode.Created, Type = typeof(RecipeDto), Description = "Recipe created")]
         [SwaggerResponse(HttpStatusCode.Unauthorized, Type = typeof(Error), Description = "Forbidden")]
-        public virtual IHttpActionResult Post(CreateRecipe createRecipe)
+        [AllowAnonymous]
+        public IHttpActionResult Post(CreateRecipe createRecipe)
         {
             if (!ModelState.IsValid)
             {
@@ -118,6 +119,8 @@ namespace FriGo.Api.Controllers
             }
 
             Recipe newRecipe = AutoMapper.Map<CreateRecipe,Recipe>(createRecipe);
+            if (newRecipe.ImageId == null)
+                recipeService.SetDefaultPicture(newRecipe);
 
             var uid = User.Identity.GetUserId();
             FriGo.Db.Models.Authentication.User user = userService.Get(uid);

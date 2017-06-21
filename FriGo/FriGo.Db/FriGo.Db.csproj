@@ -61,6 +61,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
@@ -147,12 +148,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Base64Image.txt" />
+    <None Include="Resources\appetizer.png" />
+    <None Include="Resources\dessert.png" />
+    <None Include="Resources\main.png" />
     <Content Include="SeedLists\UnitList.txt" />
     <Content Include="SeedLists\IngredientList.txt" />
   </ItemGroup>

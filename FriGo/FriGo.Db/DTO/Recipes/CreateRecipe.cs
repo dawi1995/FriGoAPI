@@ -11,6 +11,6 @@ namespace FriGo.Db.DTO.Recipes
         public string Description { get; set; }
         public IEnumerable<CreateIngredientQuantity> CreateIngredientQuantities { get; set; }
         public IEnumerable<Tag> Tags { get; set; }        
-        public Guid ImageId { get; set; }
+        public Guid? ImageId { get; set; }
     }
 }
