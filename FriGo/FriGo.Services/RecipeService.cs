@@ -5,6 +5,8 @@ using FriGo.DAL;
 using FriGo.ServiceInterfaces;
 using FriGo.Db.Models.Authentication;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FriGo.Services
 
@@ -22,26 +24,9 @@ namespace FriGo.Services
 
         public decimal? GetRatingByRecipe(Recipe recipe)
         {
-            try
-            {
-                var rates = rateService.GetByRecipeId(recipe.Id);
-
-                decimal rating = 0;
-                decimal sum = 0;
-                decimal count = 0;
-                foreach (var rate in rates)
-                {
-                    count++;
-                    sum += rate.Rating;
-                }
-                rating = sum / count;
+                IEnumerable<Rate> rates = rateService.GetByRecipeId(recipe.Id);
+                decimal rating = rating = rates.Select(rate => rate.Rating).Sum() / rates.Count();
                 return rating;
-            }
-            catch (Exception)
-            {
-
-                return null;
-            }
 
 
         }
