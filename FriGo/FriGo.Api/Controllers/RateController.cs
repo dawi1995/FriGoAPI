@@ -54,7 +54,6 @@ namespace FriGo.Api.Controllers
                 rate.Recipe = recipe;
                 rate.User = user;
                 recipe.Rates.Add(rate);
-                rateService.Add(rate);
                 return Request.CreateResponse(HttpStatusCode.OK, rate);
             }
 
