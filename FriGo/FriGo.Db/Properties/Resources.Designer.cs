@@ -61,6 +61,25 @@ namespace FriGo.Db.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap appetizer {
+            get {
+                object obj = ResourceManager.GetObject("appetizer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 9CCFA6BD1C364830910E4B024858DDC0.
+        /// </summary>
+        public static string AppetizerImageId {
+            get {
+                return ResourceManager.GetString("AppetizerImageId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 8kEHBEL9iaf/owaRD1nnZXYd6LSMZsoAtQ5dCz3ZktDGTyQ4lFmR8NBQtMVd7geiIxIbrETk9qpafwlk+CZn7jMq17v6iAFojBOuowif0YTDXtCfHxEFkSDDpLhD6bbacSwxtKz5H6SkLpHTClIzjGWtBJKz/OXJoHKxwrrlZw1olk76TFHDuvCMsPjROOkAX7Uo/k+UXAQM+j64kMue/RO3JEkHYL1LLZS3GtQFrAYvqjieDpOzuMiG4bH2wOtAnOTwXJnR7WWbFjfKMStf8vPHsYlIa8kq3LlBtFjT9HBqkyhLpldOW6rAbF+lh5KPEUi4XahYqKTm3yXl0RfjmW2tqHjTycdU/RAO/OBbhvQxUxvwTgtuk6DH6i6LHzT170XIErO6Nu03ElUvQ0TO0v7idEgjG7ZuoIuxNt74ExjM0UFZ2R5Xvkfel53RF7k1xk5AaTZeCQOm1hLA+/kp5QwrkALMd0vX+WPErF/FyHEvtD1cjXDzNI6b1Q2bS6mN [rest of string was truncated]&quot;;.
         /// </summary>
         public static string Base64Image {
@@ -75,6 +94,25 @@ namespace FriGo.Db.Properties {
         public static string ConfirmPasswordValidationMessage {
             get {
                 return ResourceManager.GetString("ConfirmPasswordValidationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap dessert {
+            get {
+                object obj = ResourceManager.GetObject("dessert", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 43410B819BFB4FDC8F5BF892976FEE47.
+        /// </summary>
+        public static string DessertImageId {
+            get {
+                return ResourceManager.GetString("DessertImageId", resourceCulture);
             }
         }
         
@@ -166,6 +204,25 @@ namespace FriGo.Db.Properties {
         public static string IngredientUnitExistMessage {
             get {
                 return ResourceManager.GetString("IngredientUnitExistMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap main {
+            get {
+                object obj = ResourceManager.GetObject("main", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A9DF6800D94C4149B4AD47E46CC9BD1E.
+        /// </summary>
+        public static string MainCourseImageId {
+            get {
+                return ResourceManager.GetString("MainCourseImageId", resourceCulture);
             }
         }
         

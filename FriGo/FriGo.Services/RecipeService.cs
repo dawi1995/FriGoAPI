@@ -8,8 +8,14 @@ namespace FriGo.Services
 
 {
     public class RecipeService : CrudService<Recipe>, IRecipeService, IRequestDependency
-    {//Add dependency
+    {
         public ISearchEngine Engine { get; set; }
+
+        public void SetDefaultPicture(Recipe recipe)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public RecipeService(IUnitOfWork unitOfWork) : base (unitOfWork)
         {
             Engine = new SearchEngine(this.Get());

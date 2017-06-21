@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Drawing;
 using System.Linq;
-using FriGo.Db.Models;
 using FriGo.Db.Models.Ingredients;
+using Image = FriGo.Db.Models.Image;
 
 namespace FriGo.Db
 {
@@ -16,16 +17,35 @@ namespace FriGo.Db
 
         private IEnumerable<Image> CreateImages()
         {
-            var images = new List<Image>();
+            var imageConverter = new ImageConverter();
+            var randomUserId = new Guid();
 
-            var image = new Image
+            var testImage = new Image
             {
                 Id = new Guid(new string(Properties.Resources.DiGgeRetsae.ToCharArray().Reverse().ToArray())),
-                ImageBytes = Convert.FromBase64String(Properties.Resources.Base64Image)
+                ImageBytes = Convert.FromBase64String(Properties.Resources.Base64Image),
+                UserId = randomUserId
             };
-            images.Add(image);
+            var dessertImage = new Image
+            {
+                Id = new Guid(Properties.Resources.DessertImageId),
+                ImageBytes = imageConverter.ConvertTo(Properties.Resources.dessert, typeof(byte[])) as byte[],
+                UserId = randomUserId
+            };
+            var mainCourseImage = new Image
+            {
+                Id = new Guid(Properties.Resources.MainCourseImageId),
+                ImageBytes = imageConverter.ConvertTo(Properties.Resources.main, typeof(byte[])) as byte[],
+                UserId = randomUserId
+            };
+            var appetizer = new Image
+            {
+                Id = new Guid(Properties.Resources.AppetizerImageId),
+                ImageBytes = imageConverter.ConvertTo(Properties.Resources.appetizer, typeof(byte[])) as byte[],
+                UserId = randomUserId
+            };
 
-            return images;
+            return new List<Image>{testImage, dessertImage, mainCourseImage, appetizer};
         }
 
         private IEnumerable<Ingredient> CreateIngredients(IEnumerable<Unit> units)

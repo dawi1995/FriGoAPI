@@ -117,12 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AppetizerImageId" xml:space="preserve">
+    <value>9CCFA6BD1C364830910E4B024858DDC0</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Base64Image" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Base64Image.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1250</value>
   </data>
   <data name="ConfirmPasswordValidationMessage" xml:space="preserve">
     <value>Wartości w polach nowe hasło oraz potwierdzenie nowego hasła są różne.</value>
+  </data>
+  <data name="DessertImageId" xml:space="preserve">
+    <value>43410B819BFB4FDC8F5BF892976FEE47</value>
   </data>
   <data name="DiGgeRetsae" xml:space="preserve">
     <value>F62716B6F62716B6F62716B6F62716B6</value>
@@ -154,6 +160,9 @@
   <data name="IngredientUnitExistMessage" xml:space="preserve">
     <value>Jednostka o podanym Id nie istnieje.</value>
   </data>
+  <data name="MainCourseImageId" xml:space="preserve">
+    <value>A9DF6800D94C4149B4AD47E46CC9BD1E</value>
+  </data>
   <data name="PasswordLengthValidationMessage" xml:space="preserve">
     <value>Hasło musi składać się z minimum {0} znaków.</value>
   </data>
@@ -162,5 +171,14 @@
   </data>
   <data name="UsernameExistsValidationMessage" xml:space="preserve">
     <value>Użytkownik o podanej nazwie już istnieje.</value>
+  </data>
+  <data name="appetizer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\appetizer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dessert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dessert.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="main" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\main.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
